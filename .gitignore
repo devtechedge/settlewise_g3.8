@@ -27,3 +27,4 @@ metadata.json
 Thumbs.db
 *.log
 *.tsbuildinfo
+.vercel
