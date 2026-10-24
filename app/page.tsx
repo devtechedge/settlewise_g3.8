@@ -28,25 +28,25 @@ export default function HomePage() {
   const othersOwe = participantsCount > 0 ? ((amountNumber * (participantsCount - 1)) / participantsCount).toFixed(2) : '0.00';
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+    <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
       <DisclaimerBanner />
       <Navbar />
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="ledger-paper border-b border-[#e5ded0] py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+        <section className="ledger-paper border-b border-[var(--sw-border)] py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ede7da] border border-[#d8d0bf] text-xs font-mono text-[#554e42]">
-              <Scale className="w-3.5 h-3.5 text-[#2a5c4d]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--sw-warm)] border border-[var(--sw-border-strong)] text-xs font-mono text-[var(--sw-body)]">
+              <Scale className="w-3.5 h-3.5 text-[var(--sw-accent)]" />
               <span>Exact Integer-Minor-Unit Math • Auditable Ledgers</span>
             </div>
 
-            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-[#1c2826] tracking-tight leading-tight">
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-[var(--sw-ink)] tracking-tight leading-tight">
               Shared Expense Reconciliation <br />
-              <span className="text-[#2a5c4d] font-normal italic">Without the Ambiguity</span>
+              <span className="text-[var(--sw-accent)] font-normal italic">Without the Ambiguity</span>
             </h1>
 
-            <p className="max-w-2xl mx-auto text-sm sm:text-base text-[#5a5448] leading-relaxed">
+            <p className="max-w-2xl mx-auto text-sm sm:text-base text-[var(--sw-body)] leading-relaxed">
               Settlewise records household and group purchases with verifiable mathematical precision.
               Calculate who owes whom, preserve immutable revision trails, and eliminate awkward math with deterministic settlement plans.
             </p>
@@ -54,20 +54,20 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <Link
                 href="/groups"
-                className="px-6 py-3 rounded-md bg-[#2a5c4d] hover:bg-[#20473b] text-[#fbf9f4] text-sm font-semibold transition-all shadow-sm flex items-center gap-2"
+                className="px-6 py-3 rounded-md bg-[var(--sw-accent)] hover:bg-[var(--sw-accent-strong)] text-[var(--sw-on-ink)] text-sm font-semibold transition-all shadow-sm flex items-center gap-2"
               >
                 <span>Open Group Ledgers</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/groups/new"
-                className="px-6 py-3 rounded-md bg-[#f2ede2] hover:bg-[#eae3d5] text-[#1c2826] border border-[#d8d0bf] text-sm font-semibold transition-all"
+                className="px-6 py-3 rounded-md bg-[var(--sw-surface-muted)] hover:bg-[var(--sw-warm)] text-[var(--sw-ink)] border border-[var(--sw-border-strong)] text-sm font-semibold transition-all"
               >
                 Create New Group
               </Link>
             </div>
 
-            <div className="text-xs text-[#70695b] pt-2">
+            <div className="text-xs text-[var(--sw-muted)] pt-2">
               ✓ Pre-loaded with fictional <strong>Pine Street Flat</strong> (USD) and <strong>Kyoto Trip 2026</strong> (JPY) demo ledgers.
             </div>
           </div>
@@ -75,29 +75,29 @@ export default function HomePage() {
 
         {/* Interactive Illustrative Preview */}
         <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-          <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#ece6d9] gap-2">
+          <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--sw-border-soft)] gap-2">
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#8c4b2d] font-bold">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--sw-rust)] font-bold">
                   Interactive Preview (Illustrative Only)
                 </span>
-                <h2 className="text-xl font-serif font-bold text-[#1c2826] mt-0.5">
+                <h2 className="text-xl font-serif font-bold text-[var(--sw-ink)] mt-0.5">
                   How Settlewise Consolidates Debt
                 </h2>
               </div>
-              <span className="text-xs px-2.5 py-1 bg-[#ede7da] text-[#554e42] rounded font-mono self-start sm:self-auto">
+              <span className="text-xs px-2.5 py-1 bg-[var(--sw-warm)] text-[var(--sw-body)] rounded font-mono self-start sm:self-auto">
                 Deterministic greedy plan
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Controls */}
-              <div className="space-y-4 bg-[#f7f4eb] p-4 rounded-lg border border-[#e2dacf]">
-                <div className="text-xs font-bold text-[#1c2826] uppercase tracking-wider">
+              <div className="space-y-4 bg-[var(--sw-surface-soft)] p-4 rounded-lg border border-[var(--sw-border-soft)]">
+                <div className="text-xs font-bold text-[var(--sw-ink)] uppercase tracking-wider">
                   Test Transaction
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                  <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                     Expense Amount ($)
                   </label>
                   <input
@@ -106,11 +106,11 @@ export default function HomePage() {
                     step="0.01"
                     value={dinnerAmount}
                     onChange={(e) => setDinnerAmount(e.target.value)}
-                    className="w-full px-3 py-1.5 bg-white border border-[#cfc6b5] rounded text-xs font-mono focus:outline-[#2a5c4d]"
+                    className="w-full px-3 py-1.5 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs font-mono focus:outline-[var(--sw-accent)]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                  <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                     Beneficiaries ({participantsCount} roommates)
                   </label>
                   <input
@@ -119,17 +119,17 @@ export default function HomePage() {
                     max="6"
                     value={participantsCount}
                     onChange={(e) => setParticipantsCount(parseInt(e.target.value))}
-                    className="w-full accent-[#2a5c4d]"
+                    className="w-full accent-[var(--sw-accent)]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                  <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                     Payer
                   </label>
                   <select
                     value={payerName}
                     onChange={(e) => setPayerName(e.target.value)}
-                    className="w-full px-3 py-1.5 bg-white border border-[#cfc6b5] rounded text-xs focus:outline-[#2a5c4d]"
+                    className="w-full px-3 py-1.5 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs focus:outline-[var(--sw-accent)]"
                   >
                     <option value="Alice">Alice Vance</option>
                     <option value="Bob">Bob Chen</option>
@@ -139,33 +139,33 @@ export default function HomePage() {
               </div>
 
               {/* Explanatory Output */}
-              <div className="flex flex-col justify-between space-y-4 bg-[#fcfbf7] p-4 rounded-lg border border-[#e5ded0]">
+              <div className="flex flex-col justify-between space-y-4 bg-[var(--sw-surface)] p-4 rounded-lg border border-[var(--sw-border)]">
                 <div>
-                  <div className="text-xs font-bold text-[#1c2826] uppercase tracking-wider mb-2">
+                  <div className="text-xs font-bold text-[var(--sw-ink)] uppercase tracking-wider mb-2">
                     Settlement Outcome
                   </div>
-                  <div className="space-y-2 text-xs text-[#554e42]">
-                    <div className="flex justify-between py-1 border-b border-[#f0ebd9]">
+                  <div className="space-y-2 text-xs text-[var(--sw-body)]">
+                    <div className="flex justify-between py-1 border-b border-[var(--sw-divide)]">
                       <span>Equal Share Per Beneficiary:</span>
-                      <span className="font-mono font-bold text-[#1c2826]">${perPerson}</span>
+                      <span className="font-mono font-bold text-[var(--sw-ink)]">${perPerson}</span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-[#f0ebd9]">
+                    <div className="flex justify-between py-1 border-b border-[var(--sw-divide)]">
                       <span>Payer Net Credit (Is Owed):</span>
-                      <span className="font-mono font-bold text-[#2a5c4d]">+${othersOwe}</span>
+                      <span className="font-mono font-bold text-[var(--sw-accent)]">+${othersOwe}</span>
                     </div>
                     <div className="flex justify-between py-1">
                       <span>Other {participantsCount - 1} Roommate(s) Net Owed:</span>
-                      <span className="font-mono font-bold text-[#8c4b2d]">-${othersOwe} total</span>
+                      <span className="font-mono font-bold text-[var(--sw-rust)]">-${othersOwe} total</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-[#ede7da] p-3 rounded-md text-xs text-[#332f27] space-y-1">
-                  <div className="font-semibold flex items-center gap-1.5 text-[#1c2826]">
-                    <Calculator className="w-3.5 h-3.5 text-[#2a5c4d]" />
+                <div className="bg-[var(--sw-warm)] p-3 rounded-md text-xs text-[var(--sw-ink)] space-y-1">
+                  <div className="font-semibold flex items-center gap-1.5 text-[var(--sw-ink)]">
+                    <Calculator className="w-3.5 h-3.5 text-[var(--sw-accent)]" />
                     <span>Explainable Settlement Plan:</span>
                   </div>
-                  <p className="text-[11px] leading-relaxed text-[#554e42]">
+                  <p className="text-[11px] leading-relaxed text-[var(--sw-body)]">
                     Rather than recording multiple separate transfers, Settlewise consolidates the net balances so each debtor transfers directly to {payerName} in 1 payment of ${perPerson}.
                   </p>
                 </div>
@@ -175,49 +175,49 @@ export default function HomePage() {
         </section>
 
         {/* Feature Highlights */}
-        <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-[#e5ded0]">
+        <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-[var(--sw-border)]">
           <div className="text-center mb-10">
-            <h2 className="text-2xl font-serif font-bold text-[#1c2826]">
+            <h2 className="text-2xl font-serif font-bold text-[var(--sw-ink)]">
               Engineered for Accuracy & Trust
             </h2>
-            <p className="text-xs text-[#70695b] mt-1 max-w-md mx-auto">
+            <p className="text-xs text-[var(--sw-muted)] mt-1 max-w-md mx-auto">
               Real relational database persistence, reproducible algorithms, and full auditability.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-[#fcfbf7] border border-[#e5ded0] p-5 rounded-lg space-y-2.5">
-              <div className="w-8 h-8 rounded bg-[#f2ede2] flex items-center justify-center text-[#2a5c4d]">
+            <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] p-5 rounded-lg space-y-2.5">
+              <div className="w-8 h-8 rounded bg-[var(--sw-surface-muted)] flex items-center justify-center text-[var(--sw-accent)]">
                 <Scale className="w-4 h-4" />
               </div>
-              <h3 className="font-serif font-bold text-sm text-[#1c2826]">
+              <h3 className="font-serif font-bold text-sm text-[var(--sw-ink)]">
                 Exact Minor-Unit Arithmetic
               </h3>
-              <p className="text-xs text-[#5a5448] leading-relaxed">
+              <p className="text-xs text-[var(--sw-body)] leading-relaxed">
                 No JavaScript floating-point rounding errors. Stored as integer pennies/cents with deterministic largest-remainder distribution for odd splits.
               </p>
             </div>
 
-            <div className="bg-[#fcfbf7] border border-[#e5ded0] p-5 rounded-lg space-y-2.5">
-              <div className="w-8 h-8 rounded bg-[#f2ede2] flex items-center justify-center text-[#8c4b2d]">
+            <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] p-5 rounded-lg space-y-2.5">
+              <div className="w-8 h-8 rounded bg-[var(--sw-surface-muted)] flex items-center justify-center text-[var(--sw-rust)]">
                 <RefreshCw className="w-4 h-4" />
               </div>
-              <h3 className="font-serif font-bold text-sm text-[#1c2826]">
+              <h3 className="font-serif font-bold text-sm text-[var(--sw-ink)]">
                 Immutable Audit Trail
               </h3>
-              <p className="text-xs text-[#5a5448] leading-relaxed">
+              <p className="text-xs text-[var(--sw-body)] leading-relaxed">
                 Expense edits require revision preconditions to prevent overwrite conflicts, capturing before/after snapshots and reasons.
               </p>
             </div>
 
-            <div className="bg-[#fcfbf7] border border-[#e5ded0] p-5 rounded-lg space-y-2.5">
-              <div className="w-8 h-8 rounded bg-[#f2ede2] flex items-center justify-center text-[#3d6380]">
+            <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] p-5 rounded-lg space-y-2.5">
+              <div className="w-8 h-8 rounded bg-[var(--sw-surface-muted)] flex items-center justify-center text-[var(--sw-blue)]">
                 <FileSpreadsheet className="w-4 h-4" />
               </div>
-              <h3 className="font-serif font-bold text-sm text-[#1c2826]">
+              <h3 className="font-serif font-bold text-sm text-[var(--sw-ink)]">
                 Trustworthy CSV Imports
               </h3>
-              <p className="text-xs text-[#5a5448] leading-relaxed">
+              <p className="text-xs text-[var(--sw-body)] leading-relaxed">
                 Interactive column mapping, SHA-256 fingerprint duplicate detection, preview validation, and formula-injection-safe exports.
               </p>
             </div>
@@ -226,25 +226,25 @@ export default function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#f7f4eb] border-t border-[#e5ded0] py-8 px-4 sm:px-6 text-center text-xs text-[#70695b] space-y-2">
+      <footer className="bg-[var(--sw-surface-soft)] border-t border-[var(--sw-border)] py-8 px-4 sm:px-6 text-center text-xs text-[var(--sw-muted)] space-y-2">
         <div className="flex items-center justify-center gap-4 text-xs font-medium">
-          <Link href="/groups" className="hover:underline text-[#1c2826]">
+          <Link href="/groups" className="hover:underline text-[var(--sw-ink)]">
             Groups
           </Link>
           <span>•</span>
-          <Link href="/privacy" className="hover:underline text-[#1c2826]">
+          <Link href="/privacy" className="hover:underline text-[var(--sw-ink)]">
             Privacy & Data Retention
           </Link>
           <span>•</span>
-          <Link href="/terms" className="hover:underline text-[#1c2826]">
+          <Link href="/terms" className="hover:underline text-[var(--sw-ink)]">
             Terms & Payment Disclaimers
           </Link>
           <span>•</span>
-          <Link href="/login" className="hover:underline text-[#1c2826]">
+          <Link href="/login" className="hover:underline text-[var(--sw-ink)]">
             Login
           </Link>
         </div>
-        <p className="text-[11px] text-[#888072]">
+        <p className="text-[11px] text-[var(--sw-muted)]">
           Settlewise is an expense reconciliation tool. It does not provide banking, credit, payment processing, or financial advice.
         </p>
       </footer>

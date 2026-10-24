@@ -121,7 +121,7 @@ export default function NewExpensePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+    <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
       <DisclaimerBanner />
       <Navbar groupId={groupId} />
 
@@ -129,31 +129,31 @@ export default function NewExpensePage() {
         <div>
           <Link
             href={`/groups/${groupId}/expenses`}
-            className="text-xs text-[#70695b] hover:text-[#1c2826] flex items-center gap-1 font-medium mb-2"
+            className="text-xs text-[var(--sw-muted)] hover:text-[var(--sw-ink)] flex items-center gap-1 font-medium mb-2"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Ledger</span>
           </Link>
-          <h1 className="font-serif text-2xl font-bold text-[#1c2826]">
+          <h1 className="font-serif text-2xl font-bold text-[var(--sw-ink)]">
             Record Shared Expense
           </h1>
-          <p className="text-xs text-[#70695b] mt-0.5">
+          <p className="text-xs text-[var(--sw-muted)] mt-0.5">
             Add a purchase to {group?.name || 'Group'}. Allocations will update net balances automatically.
           </p>
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-[#fdf2ee] border border-[#f3cbbd] rounded-md text-xs text-[#8c4b2d] flex items-center gap-2">
+          <div className="p-3 bg-[var(--sw-danger-bg)] border border-[var(--sw-danger-border)] rounded-md text-xs text-[var(--sw-rust)] flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
+        <form onSubmit={handleSubmit} className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
           {/* Basic Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+              <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                 Description *
               </label>
               <input
@@ -162,12 +162,12 @@ export default function NewExpensePage() {
                 placeholder="e.g. Weekly Groceries, Electricity Bill, Train Tickets"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded-md text-xs focus:outline-[#2a5c4d]"
+                className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded-md text-xs focus:outline-[var(--sw-accent)]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+              <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                 Amount ({group?.canonicalCurrency || 'USD'}) *
               </label>
               <input
@@ -177,18 +177,18 @@ export default function NewExpensePage() {
                 placeholder="0.00"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded-md text-xs font-mono font-semibold focus:outline-[#2a5c4d]"
+                className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded-md text-xs font-mono font-semibold focus:outline-[var(--sw-accent)]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+              <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                 Category
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded-md text-xs focus:outline-[#2a5c4d]"
+                className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded-md text-xs focus:outline-[var(--sw-accent)]"
               >
                 <option value="Groceries">Groceries</option>
                 <option value="Rent & Utilities">Rent & Utilities</option>
@@ -201,7 +201,7 @@ export default function NewExpensePage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+              <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                 Occurrence Date *
               </label>
               <input
@@ -209,18 +209,18 @@ export default function NewExpensePage() {
                 required
                 value={occurrenceDate}
                 onChange={(e) => setOccurrenceDate(e.target.value)}
-                className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded-md text-xs focus:outline-[#2a5c4d]"
+                className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded-md text-xs focus:outline-[var(--sw-accent)]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+              <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                 Paid By (Payer) *
               </label>
               <select
                 value={payerParticipantId}
                 onChange={(e) => setPayerParticipantId(e.target.value)}
-                className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded-md text-xs focus:outline-[#2a5c4d]"
+                className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded-md text-xs focus:outline-[var(--sw-accent)]"
               >
                 {participants.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -233,7 +233,7 @@ export default function NewExpensePage() {
 
           {/* Allocation Split Matrix */}
           <div>
-            <label className="block text-xs font-semibold text-[#5a5448] mb-2">
+            <label className="block text-xs font-semibold text-[var(--sw-body)] mb-2">
               Split Breakdown Among Beneficiaries
             </label>
             <SplitEditor
@@ -255,7 +255,7 @@ export default function NewExpensePage() {
 
           {/* Notes */}
           <div>
-            <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+            <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
               Notes / Receipt Details (Optional)
             </label>
             <textarea
@@ -263,22 +263,22 @@ export default function NewExpensePage() {
               placeholder="e.g. Receipt itemized in pantry folder, wire ref #89421"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded-md text-xs focus:outline-[#2a5c4d]"
+              className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded-md text-xs focus:outline-[var(--sw-accent)]"
             />
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#e2dacf]">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-[var(--sw-border-soft)]">
             <Link
               href={`/groups/${groupId}/expenses`}
-              className="px-4 py-2 text-xs text-[#554e42] hover:bg-[#ede7da] rounded-md"
+              className="px-4 py-2 text-xs text-[var(--sw-body)] hover:bg-[var(--sw-warm)] rounded-md"
             >
               Cancel
             </Link>
             <button
               type="submit"
               disabled={submitting}
-              className="px-5 py-2 bg-[#2a5c4d] hover:bg-[#20473b] text-white rounded-md text-xs font-semibold shadow-xs disabled:opacity-50 flex items-center gap-2"
+              className="px-5 py-2 bg-[var(--sw-accent)] hover:bg-[var(--sw-accent-strong)] text-[var(--sw-on-ink)] rounded-md text-xs font-semibold shadow-xs disabled:opacity-50 flex items-center gap-2"
             >
               <PlusCircle className="w-4 h-4" />
               <span>{submitting ? 'Recording...' : 'Record Expense'}</span>

@@ -122,61 +122,61 @@ export function SettlementFlow({
   return (
     <div className="space-y-6">
       {/* Suggested Settlement Transfers */}
-      <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-lg p-5 shadow-xs">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#ece6d9] gap-2">
+      <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-lg p-5 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--sw-border-soft)] gap-2">
           <div>
-            <h3 className="text-base font-serif font-bold text-[#1c2826]">
+            <h3 className="text-base font-serif font-bold text-[var(--sw-ink)]">
               Suggested Settlement Plan
             </h3>
-            <p className="text-xs text-[#70695b] mt-0.5">
+            <p className="text-xs text-[var(--sw-muted)] mt-0.5">
               Consolidated debtor-to-creditor reimbursement obligations. Does not process actual banking transfers.
             </p>
           </div>
-          <span className="text-xs px-2.5 py-1 rounded bg-[#ede7da] text-[#554e42] font-mono self-start sm:self-auto">
+          <span className="text-xs px-2.5 py-1 rounded bg-[var(--sw-warm)] text-[var(--sw-body)] font-mono self-start sm:self-auto">
             {transfers.length} transfer{transfers.length === 1 ? '' : 's'} required
           </span>
         </div>
 
         {transfers.length === 0 ? (
-          <div className="text-center py-8 text-xs text-[#2a5c4d] flex flex-col items-center gap-2">
-            <CheckCircle className="w-8 h-8 text-[#2a5c4d]" />
+          <div className="text-center py-8 text-xs text-[var(--sw-accent)] flex flex-col items-center gap-2">
+            <CheckCircle className="w-8 h-8 text-[var(--sw-accent)]" />
             <p className="font-semibold text-sm">All obligations are balanced.</p>
-            <p className="text-[#554e42]">No participants currently owe or are owed funds.</p>
+            <p className="text-[var(--sw-body)]">No participants currently owe or are owed funds.</p>
           </div>
         ) : (
           <div className="divide-y divide-[#f0ebd9] mt-3">
             {transfers.map((t, idx) => (
               <div
                 key={idx}
-                className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[#faf7ee] px-2 rounded-md transition-colors"
+                className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[var(--sw-hover)] px-2 rounded-md transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2 font-medium text-xs text-[#1c2826]">
-                    <span className="px-2 py-1 bg-[#f3ede0] border border-[#dfd7c8] rounded font-semibold text-[#8c4b2d]">
+                  <div className="flex items-center gap-2 font-medium text-xs text-[var(--sw-ink)]">
+                    <span className="px-2 py-1 bg-[#f3ede0] border border-[var(--sw-border)] rounded font-semibold text-[var(--sw-rust)]">
                       {t.senderName}
                     </span>
-                    <ArrowRight className="w-4 h-4 text-[#70695b] shrink-0" />
-                    <span className="px-2 py-1 bg-[#e7efe9] border border-[#c5d8cb] rounded font-semibold text-[#2a5c4d]">
+                    <ArrowRight className="w-4 h-4 text-[var(--sw-muted)] shrink-0" />
+                    <span className="px-2 py-1 bg-[#e7efe9] border border-[#c5d8cb] rounded font-semibold text-[var(--sw-accent)]">
                       {t.recipientName}
                     </span>
                   </div>
-                  <span className="text-[11px] text-[#70695b] hidden md:inline truncate max-w-xs">
+                  <span className="text-[11px] text-[var(--sw-muted)] hidden md:inline truncate max-w-xs">
                     — {t.basis}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3 self-end sm:self-auto">
                   <div className="text-right">
-                    <div className="font-mono font-bold text-sm text-[#1c2826] tabular-nums">
+                    <div className="font-mono font-bold text-sm text-[var(--sw-ink)] tabular-nums">
                       {formatMoney(BigInt(t.amountMinorUnits), currency)}
                     </div>
-                    <div className="text-[10px] text-[#70695b]">Suggested transfer</div>
+                    <div className="text-[10px] text-[var(--sw-muted)]">Suggested transfer</div>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => openRecordModal(t)}
-                    className="px-3 py-1.5 bg-[#1c2826] text-[#fbf9f4] hover:bg-[#2b3d3a] rounded text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-xs"
+                    className="px-3 py-1.5 bg-[#1c2826] text-[var(--sw-on-ink)] hover:bg-[#2b3d3a] rounded text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-xs"
                   >
                     <CheckCircle className="w-3.5 h-3.5" />
                     <span>Record Reimbursement</span>
@@ -189,23 +189,23 @@ export function SettlementFlow({
       </div>
 
       {/* Recorded Reimbursement History */}
-      <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-lg p-5 shadow-xs">
-        <h3 className="text-sm font-serif font-bold text-[#1c2826] mb-1">
+      <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-lg p-5 shadow-xs">
+        <h3 className="text-sm font-serif font-bold text-[var(--sw-ink)] mb-1">
           Recorded Reimbursement History
         </h3>
-        <p className="text-xs text-[#70695b] mb-4">
+        <p className="text-xs text-[var(--sw-muted)] mb-4">
           All user-logged inter-participant settlements. Reversals preserve immutable compensating history.
         </p>
 
         {payments.length === 0 ? (
-          <div className="text-center py-6 text-xs text-[#70695b]">
+          <div className="text-center py-6 text-xs text-[var(--sw-muted)]">
             No reimbursements recorded yet.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-left">
               <thead>
-                <tr className="border-b border-[#e5ded0] text-[#70695b] font-mono uppercase text-[10px]">
+                <tr className="border-b border-[var(--sw-border)] text-[var(--sw-muted)] font-mono uppercase text-[10px]">
                   <th className="py-2 px-2">Date</th>
                   <th className="py-2 px-2">From</th>
                   <th className="py-2 px-2">To</th>
@@ -215,36 +215,36 @@ export function SettlementFlow({
                   <th className="py-2 px-2 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#f2eee3]">
+              <tbody className="divide-y divide-[var(--sw-divide)]">
                 {payments.map((pmt) => {
                   const isReversed = pmt.status === 'REVERSED';
                   return (
                     <tr
                       key={pmt.id}
-                      className={`hover:bg-[#faf7ee] transition-colors ${
+                      className={`hover:bg-[var(--sw-hover)] transition-colors ${
                         isReversed ? 'opacity-60 bg-[#faf6f4]' : ''
                       }`}
                     >
-                      <td className="py-2.5 px-2 font-mono text-[#554e42]">{pmt.recordedDate}</td>
-                      <td className="py-2.5 px-2 font-medium text-[#1c2826]">{pmt.senderName}</td>
-                      <td className="py-2.5 px-2 font-medium text-[#1c2826]">{pmt.recipientName}</td>
-                      <td className="py-2.5 px-2 text-right font-mono font-semibold tabular-nums text-[#1c2826]">
+                      <td className="py-2.5 px-2 font-mono text-[var(--sw-body)]">{pmt.recordedDate}</td>
+                      <td className="py-2.5 px-2 font-medium text-[var(--sw-ink)]">{pmt.senderName}</td>
+                      <td className="py-2.5 px-2 font-medium text-[var(--sw-ink)]">{pmt.recipientName}</td>
+                      <td className="py-2.5 px-2 text-right font-mono font-semibold tabular-nums text-[var(--sw-ink)]">
                         {formatMoney(BigInt(pmt.amountMinorUnits), currency)}
                       </td>
                       <td className="py-2.5 px-2">
                         {isReversed ? (
-                          <span className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-[#f3cbbd] text-[#8c4b2d] font-semibold">
+                          <span className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-[#f3cbbd] text-[var(--sw-rust)] font-semibold">
                             <RotateCcw className="w-2.5 h-2.5" /> REVERSED
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-[#c5d8cb] text-[#2a5c4d] font-semibold">
+                          <span className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-[var(--sw-positive-bg)] text-[var(--sw-accent)] font-semibold">
                             CONFIRMED
                           </span>
                         )}
                       </td>
-                      <td className="py-2.5 px-2 text-[#70695b] max-w-xs truncate">
+                      <td className="py-2.5 px-2 text-[var(--sw-muted)] max-w-xs truncate">
                         {isReversed ? (
-                          <span className="text-[#8c4b2d]">
+                          <span className="text-[var(--sw-rust)]">
                             Reversal: {pmt.reversalReason || 'Reversed'}
                           </span>
                         ) : (
@@ -260,7 +260,7 @@ export function SettlementFlow({
                               setReversalReason('');
                               setReversalModalOpen(true);
                             }}
-                            className="text-[#8c4b2d] hover:text-[#5c2d18] text-[11px] font-medium hover:underline inline-flex items-center gap-1"
+                            className="text-[var(--sw-rust)] hover:text-[#5c2d18] text-[11px] font-medium hover:underline inline-flex items-center gap-1"
                           >
                             <RotateCcw className="w-3 h-3" />
                             <span>Reverse</span>
@@ -279,11 +279,11 @@ export function SettlementFlow({
       {/* Record Reimbursement Modal */}
       {modalOpen && selectedTransfer && (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-[#fcfbf7] border border-[#d8d0bf] rounded-lg max-w-md w-full p-6 shadow-xl space-y-4">
-            <h3 className="text-base font-serif font-bold text-[#1c2826]">
+          <div className="bg-[var(--sw-surface)] border border-[var(--sw-border-strong)] rounded-lg max-w-md w-full p-6 shadow-xl space-y-4">
+            <h3 className="text-base font-serif font-bold text-[var(--sw-ink)]">
               Record Reimbursement
             </h3>
-            <p className="text-xs text-[#70695b]">
+            <p className="text-xs text-[var(--sw-muted)]">
               Confirm that an offline reimbursement was made between participants. This updates ledger balances deterministically.
             </p>
 
@@ -298,7 +298,7 @@ export function SettlementFlow({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                   Reimbursement Amount ({currency})
                 </label>
                 <input
@@ -306,12 +306,12 @@ export function SettlementFlow({
                   required
                   value={paymentAmount}
                   onChange={(e) => setPaymentAmount(e.target.value)}
-                  className="w-full px-3 py-1.5 bg-white border border-[#cfc6b5] rounded text-xs font-mono focus:outline-[#2a5c4d]"
+                  className="w-full px-3 py-1.5 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs font-mono focus:outline-[var(--sw-accent)]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                   Payment Date
                 </label>
                 <input
@@ -319,12 +319,12 @@ export function SettlementFlow({
                   required
                   value={paymentDate}
                   onChange={(e) => setPaymentDate(e.target.value)}
-                  className="w-full px-3 py-1.5 bg-white border border-[#cfc6b5] rounded text-xs focus:outline-[#2a5c4d]"
+                  className="w-full px-3 py-1.5 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs focus:outline-[var(--sw-accent)]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                   Notes / Payment Method
                 </label>
                 <input
@@ -332,28 +332,28 @@ export function SettlementFlow({
                   placeholder="e.g. Zelle, Cash, Bank Transfer reference"
                   value={paymentNotes}
                   onChange={(e) => setPaymentNotes(e.target.value)}
-                  className="w-full px-3 py-1.5 bg-white border border-[#cfc6b5] rounded text-xs focus:outline-[#2a5c4d]"
+                  className="w-full px-3 py-1.5 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs focus:outline-[var(--sw-accent)]"
                 />
               </div>
 
               {errorMsg && (
-                <div className="p-2 bg-[#fdf2ee] border border-[#f3cbbd] rounded text-xs text-[#8c4b2d]">
+                <div className="p-2 bg-[var(--sw-danger-bg)] border border-[var(--sw-danger-border)] rounded text-xs text-[var(--sw-rust)]">
                   {errorMsg}
                 </div>
               )}
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#e2dacf]">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[var(--sw-border-soft)]">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-3 py-1.5 text-xs text-[#554e42] hover:bg-[#ede7da] rounded"
+                  className="px-3 py-1.5 text-xs text-[var(--sw-body)] hover:bg-[var(--sw-warm)] rounded"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-4 py-1.5 bg-[#2a5c4d] hover:bg-[#214a3e] text-white rounded text-xs font-semibold disabled:opacity-50"
+                  className="px-4 py-1.5 bg-[var(--sw-accent)] hover:bg-[var(--sw-accent-strong)] text-[var(--sw-on-ink)] rounded text-xs font-semibold disabled:opacity-50"
                 >
                   {submitting ? 'Recording...' : 'Confirm Reimbursement'}
                 </button>
@@ -366,18 +366,18 @@ export function SettlementFlow({
       {/* Reverse Payment Modal */}
       {reversalModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-[#fcfbf7] border border-[#d8d0bf] rounded-lg max-w-md w-full p-6 shadow-xl space-y-4">
-            <h3 className="text-base font-serif font-bold text-[#8c4b2d] flex items-center gap-2">
+          <div className="bg-[var(--sw-surface)] border border-[var(--sw-border-strong)] rounded-lg max-w-md w-full p-6 shadow-xl space-y-4">
+            <h3 className="text-base font-serif font-bold text-[var(--sw-rust)] flex items-center gap-2">
               <RotateCcw className="w-5 h-5" />
               <span>Reverse Settlement Payment</span>
             </h3>
-            <p className="text-xs text-[#70695b]">
+            <p className="text-xs text-[var(--sw-muted)]">
               Reversing this payment restores prior participant balances. The original payment record remains in the audit log for compliance.
             </p>
 
             <form onSubmit={handleReverseSubmit} className="space-y-3">
               <div>
-                <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                   Reason for Reversal (Required for audit trail)
                 </label>
                 <textarea
@@ -386,28 +386,28 @@ export function SettlementFlow({
                   placeholder="e.g. Sent to wrong account handle, bounced check, or entered in error"
                   value={reversalReason}
                   onChange={(e) => setReversalReason(e.target.value)}
-                  className="w-full px-3 py-1.5 bg-white border border-[#cfc6b5] rounded text-xs focus:outline-[#8c4b2d]"
+                  className="w-full px-3 py-1.5 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs focus:outline-[#8c4b2d]"
                 />
               </div>
 
               {errorMsg && (
-                <div className="p-2 bg-[#fdf2ee] border border-[#f3cbbd] rounded text-xs text-[#8c4b2d]">
+                <div className="p-2 bg-[var(--sw-danger-bg)] border border-[var(--sw-danger-border)] rounded text-xs text-[var(--sw-rust)]">
                   {errorMsg}
                 </div>
               )}
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#e2dacf]">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[var(--sw-border-soft)]">
                 <button
                   type="button"
                   onClick={() => setReversalModalOpen(false)}
-                  className="px-3 py-1.5 text-xs text-[#554e42] hover:bg-[#ede7da] rounded"
+                  className="px-3 py-1.5 text-xs text-[var(--sw-body)] hover:bg-[var(--sw-warm)] rounded"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-4 py-1.5 bg-[#8c4b2d] hover:bg-[#6e3820] text-white rounded text-xs font-semibold disabled:opacity-50"
+                  className="px-4 py-1.5 bg-[var(--sw-rust)] hover:bg-[#6e3820] text-[var(--sw-on-ink)] rounded text-xs font-semibold disabled:opacity-50"
                 >
                   {submitting ? 'Reversing...' : 'Confirm Reversal'}
                 </button>

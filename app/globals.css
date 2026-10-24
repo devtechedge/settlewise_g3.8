@@ -1,6 +1,64 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+:root {
+  color-scheme: light;
+  --sw-bg: #fbf9f4;
+  --sw-surface: #fcfbf7;
+  --sw-surface-soft: #f7f4eb;
+  --sw-surface-muted: #f2ede2;
+  --sw-warm: #ede7da;
+  --sw-hover: #f3ede0;
+  --sw-border: #e5ded0;
+  --sw-border-soft: #e8e2d4;
+  --sw-border-strong: #d8d0bf;
+  --sw-divide: #ebe4d6;
+  --sw-ink: #1c2826;
+  --sw-ink-soft: #2c3d3a;
+  --sw-on-ink: #fbf9f4;
+  --sw-body: #554e42;
+  --sw-muted: #70695b;
+  --sw-accent: #2a5c4d;
+  --sw-accent-strong: #20473b;
+  --sw-on-accent: #fbf9f4;
+  --sw-blue: #3d6380;
+  --sw-rust: #8c4b2d;
+  --sw-rust-deep: #7a3419;
+  --sw-danger-bg: #fdf2ee;
+  --sw-danger-border: #f3cbbd;
+  --sw-positive-bg: #c5d8cb;
+  --sw-input: #ffffff;
+}
+
+.dark {
+  color-scheme: dark;
+  --sw-bg: #111513;
+  --sw-surface: #171c1a;
+  --sw-surface-soft: #1d2320;
+  --sw-surface-muted: #242b28;
+  --sw-warm: #29312d;
+  --sw-hover: #222a26;
+  --sw-border: #2b332f;
+  --sw-border-soft: #262e2a;
+  --sw-border-strong: #3b453f;
+  --sw-divide: #26302b;
+  --sw-ink: #e9e5dd;
+  --sw-ink-soft: #343f3a;
+  --sw-on-ink: #0f1412;
+  --sw-body: #c8c2b6;
+  --sw-muted: #8f897d;
+  --sw-accent: #5a9b86;
+  --sw-accent-strong: #46806d;
+  --sw-on-accent: #0f1412;
+  --sw-blue: #7ba5c1;
+  --sw-rust: #d18e6e;
+  --sw-rust-deep: #e2a98d;
+  --sw-danger-bg: #38251f;
+  --sw-danger-border: #58392e;
+  --sw-positive-bg: #243b31;
+  --sw-input: #1a201d;
+}
+
 @layer base {
   /* Subtle ledger grid and financial typography helpers */
   .tabular-nums {
@@ -10,11 +68,37 @@
 
 /* Warm financial ledger paper styles */
 .ledger-paper {
-  background-color: #fbf9f4;
-  background-image: radial-gradient(#ebe5d8 0.75px, transparent 0.75px);
+  background-color: var(--sw-bg);
+  background-image: radial-gradient(var(--sw-border) 0.75px, transparent 0.75px);
   background-size: 16px 16px;
 }
 
 .ledger-border {
-  border-color: #e5ded0;
+  border-color: var(--sw-border);
+}
+
+/* Overlay hover-reveal scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+*:hover {
+  scrollbar-color: color-mix(in srgb, var(--sw-muted) 45%, transparent) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 9999px;
+}
+:hover::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--sw-muted) 50%, transparent);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--sw-muted) 75%, transparent);
 }

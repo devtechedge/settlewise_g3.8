@@ -17,6 +17,7 @@ import {
   UserCheck,
   Building,
 } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 
 interface AuthUser {
   uid: string;
@@ -76,20 +77,20 @@ export function Navbar({ groupId }: { groupId?: string }) {
       ];
 
   return (
-    <header className="bg-[#fcfbf7] border-b border-[#e5ded0] sticky top-0 z-40">
+    <header className="bg-[var(--sw-surface)] border-b border-[var(--sw-border)] sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded bg-[#1c2826] text-[#fbf9f4] flex items-center justify-center font-bold tracking-wider text-sm shadow-xs">
+              <div className="w-8 h-8 rounded bg-[#1c2826] text-[var(--sw-on-ink)] flex items-center justify-center font-bold tracking-wider text-sm shadow-xs">
                 SW
               </div>
               <div className="flex flex-col">
-                <span className="font-serif font-bold text-lg tracking-tight text-[#1c2826] leading-none">
+                <span className="font-serif font-bold text-lg tracking-tight text-[var(--sw-ink)] leading-none">
                   Settlewise
                 </span>
-                <span className="text-[10px] uppercase tracking-widest text-[#666053] font-mono mt-0.5">
+                <span className="text-[10px] uppercase tracking-widest text-[var(--sw-muted)] font-mono mt-0.5">
                   Exact Ledger & Settlement
                 </span>
               </div>
@@ -106,8 +107,8 @@ export function Navbar({ groupId }: { groupId?: string }) {
                     href={link.href}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                       isActive
-                        ? 'bg-[#ede7da] text-[#1c2826] font-semibold'
-                        : 'text-[#5a5448] hover:bg-[#f3ede0] hover:text-[#1c2826]'
+                        ? 'bg-[var(--sw-warm)] text-[var(--sw-ink)] font-semibold'
+                        : 'text-[var(--sw-body)] hover:bg-[var(--sw-hover)] hover:text-[var(--sw-ink)]'
                     }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -118,12 +119,13 @@ export function Navbar({ groupId }: { groupId?: string }) {
             </nav>
           </div>
 
-          {/* Right Header: CTA + Role Switcher */}
+          {/* Right Header: CTA + Theme + Role Switcher */}
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             {groupId && (
               <Link
                 href={`/groups/${groupId}/expenses/new`}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-[#2a5c4d] text-[#fbf9f4] rounded-md hover:bg-[#214a3e] transition-colors shadow-xs"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-[var(--sw-accent)] text-[var(--sw-on-ink)] rounded-md hover:bg-[var(--sw-accent-strong)] transition-colors shadow-xs"
               >
                 <PlusCircle className="w-3.5 h-3.5" />
                 <span>Add Expense</span>
@@ -135,18 +137,18 @@ export function Navbar({ groupId }: { groupId?: string }) {
               <button
                 type="button"
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                className="flex items-center gap-2 pl-2 pr-3 py-1.5 border border-[#dfd7c8] rounded-md bg-[#f7f4eb] hover:bg-[#ede7da] transition-colors text-xs text-[#2b2721]"
+                className="flex items-center gap-2 pl-2 pr-3 py-1.5 border border-[var(--sw-border)] rounded-md bg-[var(--sw-surface-soft)] hover:bg-[var(--sw-warm)] transition-colors text-xs text-[var(--sw-ink)]"
                 aria-label="User profile and role switcher"
                 aria-expanded={userDropdownOpen}
               >
-                <div className="w-6 h-6 rounded-full bg-[#1c2826] text-white flex items-center justify-center font-bold text-xs uppercase">
+                <div className="w-6 h-6 rounded-full bg-[var(--sw-ink)] text-[var(--sw-on-ink)] flex items-center justify-center font-bold text-xs uppercase">
                   {currentUser?.displayName?.[0] || 'U'}
                 </div>
                 <div className="text-left hidden sm:block">
-                  <div className="font-semibold text-xs leading-none text-[#1c2826]">
+                  <div className="font-semibold text-xs leading-none text-[var(--sw-ink)]">
                     {currentUser?.displayName || 'Loading...'}
                   </div>
-                  <div className="text-[10px] text-[#70695b] leading-tight">
+                  <div className="text-[10px] text-[var(--sw-muted)] leading-tight">
                     {currentUser?.uid === 'usr_alice'
                       ? 'Owner Role'
                       : currentUser?.uid === 'usr_bob'
@@ -154,13 +156,13 @@ export function Navbar({ groupId }: { groupId?: string }) {
                       : 'Member Role'}
                   </div>
                 </div>
-                <ChevronDown className="w-3.5 h-3.5 text-[#70695b]" />
+                <ChevronDown className="w-3.5 h-3.5 text-[var(--sw-muted)]" />
               </button>
 
               {userDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-[#fcfbf7] border border-[#d8d0bf] rounded-md shadow-lg py-1.5 z-50 text-xs">
-                  <div className="px-3 py-1.5 border-b border-[#e8e2d4] text-[11px] font-semibold text-[#736c5e] uppercase tracking-wider">
-                    Switch Evaluator Role
+                <div className="absolute right-0 mt-2 w-64 bg-[var(--sw-surface)] border border-[var(--sw-border-strong)] rounded-md shadow-lg py-1.5 z-50 text-xs">
+                  <div className="px-3 py-1.5 border-b border-[var(--sw-border-soft)] text-[11px] font-semibold text-[var(--sw-muted)] uppercase tracking-wider">
+                    Switch Role
                   </div>
                   {availableUsers.map((u) => {
                     const isSelected = u.uid === currentUser?.uid;
@@ -171,37 +173,37 @@ export function Navbar({ groupId }: { groupId?: string }) {
                         key={u.uid}
                         type="button"
                         onClick={() => handleSwitchUser(u.uid)}
-                        className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-[#ede7da] transition-colors ${
-                          isSelected ? 'bg-[#ede7da] font-semibold' : ''
+                        className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-[var(--sw-warm)] transition-colors ${
+                          isSelected ? 'bg-[var(--sw-warm)] font-semibold' : ''
                         }`}
                       >
                         <div className="flex items-center gap-2">
-                          <div className="w-5 h-5 rounded-full bg-[#3d6380] text-white flex items-center justify-center text-[10px] font-bold">
+                          <div className="w-5 h-5 rounded-full bg-[var(--sw-blue)] text-[var(--sw-on-ink)] flex items-center justify-center text-[10px] font-bold">
                             {u.displayName[0]}
                           </div>
                           <div>
-                            <div className="text-[#1c2826]">{u.displayName}</div>
-                            <div className="text-[10px] text-[#736c5e]">{u.email}</div>
+                            <div className="text-[var(--sw-ink)]">{u.displayName}</div>
+                            <div className="text-[10px] text-[var(--sw-muted)]">{u.email}</div>
                           </div>
                         </div>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#dfd7c8] text-[#332f27] font-mono">
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#dfd7c8] text-[var(--sw-ink)] font-mono">
                           {roleLabel}
                         </span>
                       </button>
                     );
                   })}
-                  <div className="border-t border-[#e8e2d4] my-1" />
+                  <div className="border-t border-[var(--sw-border-soft)] my-1" />
                   <Link
                     href="/account"
                     onClick={() => setUserDropdownOpen(false)}
-                    className="block px-3 py-1.5 text-[#554e42] hover:bg-[#ede7da]"
+                    className="block px-3 py-1.5 text-[var(--sw-body)] hover:bg-[var(--sw-warm)]"
                   >
                     Account & Data Retention
                   </Link>
                   <Link
                     href="/login"
                     onClick={() => setUserDropdownOpen(false)}
-                    className="block px-3 py-1.5 text-[#8c4b2d] hover:bg-[#ede7da]"
+                    className="block px-3 py-1.5 text-[var(--sw-rust)] hover:bg-[var(--sw-warm)]"
                   >
                     Google Sign-In / Switch Account
                   </Link>
@@ -213,7 +215,7 @@ export function Navbar({ groupId }: { groupId?: string }) {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-md text-[#554e42] hover:bg-[#ede7da]"
+              className="md:hidden p-2 rounded-md text-[var(--sw-body)] hover:bg-[var(--sw-warm)]"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -224,12 +226,12 @@ export function Navbar({ groupId }: { groupId?: string }) {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-[#e5ded0] bg-[#f7f4eb] px-4 pt-2 pb-3 space-y-1">
+        <div className="md:hidden border-t border-[var(--sw-border)] bg-[var(--sw-surface-soft)] px-4 pt-2 pb-3 space-y-1">
           {groupId && (
             <Link
               href={`/groups/${groupId}/expenses/new`}
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-md bg-[#2a5c4d] text-white text-xs font-semibold mb-2"
+              className="flex items-center gap-2 px-3 py-2 rounded-md bg-[var(--sw-accent)] text-[var(--sw-on-accent)] text-xs font-semibold mb-2"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Record New Expense</span>
@@ -244,7 +246,7 @@ export function Navbar({ groupId }: { groupId?: string }) {
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center gap-2 px-3 py-2 text-xs font-medium rounded-md ${
-                  isActive ? 'bg-[#ede7da] text-[#1c2826] font-semibold' : 'text-[#5a5448]'
+                  isActive ? 'bg-[var(--sw-warm)] text-[var(--sw-ink)] font-semibold' : 'text-[var(--sw-body)]'
                 }`}
               >
                 <Icon className="w-4 h-4" />

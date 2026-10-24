@@ -53,24 +53,24 @@ export default function ReportsPage() {
   const sortedPayers = Object.entries(participantPaidTotals).sort((a, b) => (b[1] > a[1] ? 1 : -1));
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+    <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
       <DisclaimerBanner />
       <Navbar groupId={groupId} />
 
       <main className="flex-1 max-w-5xl mx-auto px-4 py-8 sm:px-6 w-full space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#e5ded0]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[var(--sw-border)]">
           <div>
             <Link
               href={`/groups/${groupId}`}
-              className="text-xs text-[#70695b] hover:text-[#1c2826] flex items-center gap-1 font-medium mb-1"
+              className="text-xs text-[var(--sw-muted)] hover:text-[var(--sw-ink)] flex items-center gap-1 font-medium mb-1"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back to Overview</span>
             </Link>
-            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#1c2826]">
+            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[var(--sw-ink)]">
               Spending Reports & Analytics
             </h1>
-            <p className="text-xs text-[#70695b] mt-0.5">
+            <p className="text-xs text-[var(--sw-muted)] mt-0.5">
               Derived from verified PostgreSQL ledger records for {group?.name || 'Group'}.
             </p>
           </div>
@@ -78,7 +78,7 @@ export default function ReportsPage() {
           <a
             href={`/api/groups/${groupId}/export`}
             download
-            className="px-4 py-2 bg-[#2a5c4d] hover:bg-[#20473b] text-white rounded-md text-xs font-semibold flex items-center gap-2 shadow-xs transition-colors self-start sm:self-auto"
+            className="px-4 py-2 bg-[var(--sw-accent)] hover:bg-[var(--sw-accent-strong)] text-[var(--sw-on-ink)] rounded-md text-xs font-semibold flex items-center gap-2 shadow-xs transition-colors self-start sm:self-auto"
           >
             <Download className="w-4 h-4" />
             <span>Download Verified CSV Export</span>
@@ -86,20 +86,20 @@ export default function ReportsPage() {
         </div>
 
         {loading ? (
-          <div className="p-12 text-center text-xs text-[#70695b]">
+          <div className="p-12 text-center text-xs text-[var(--sw-muted)]">
             Compiling ledger analytics...
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Category Breakdown */}
-            <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-6 shadow-xs space-y-4">
-              <h2 className="font-serif font-bold text-sm text-[#1c2826] pb-2 border-b border-[#ece6d9] flex items-center gap-2">
-                <PieChart className="w-4 h-4 text-[#2a5c4d]" />
+            <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-6 shadow-xs space-y-4">
+              <h2 className="font-serif font-bold text-sm text-[var(--sw-ink)] pb-2 border-b border-[var(--sw-border-soft)] flex items-center gap-2">
+                <PieChart className="w-4 h-4 text-[var(--sw-accent)]" />
                 <span>Spending by Category</span>
               </h2>
 
               {sortedCategories.length === 0 ? (
-                <div className="text-center py-6 text-xs text-[#70695b]">
+                <div className="text-center py-6 text-xs text-[var(--sw-muted)]">
                   No active expenses recorded.
                 </div>
               ) : (
@@ -109,14 +109,14 @@ export default function ReportsPage() {
                     return (
                       <div key={cat} className="space-y-1 text-xs">
                         <div className="flex justify-between items-baseline">
-                          <span className="font-medium text-[#1c2826]">{cat}</span>
-                          <span className="font-mono tabular-nums text-[#554e42]">
+                          <span className="font-medium text-[var(--sw-ink)]">{cat}</span>
+                          <span className="font-mono tabular-nums text-[var(--sw-body)]">
                             {formatMoney(amount, group?.canonicalCurrency)} ({pct}%)
                           </span>
                         </div>
-                        <div className="w-full bg-[#ede7da] rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-[var(--sw-warm)] rounded-full h-2 overflow-hidden">
                           <div
-                            className="bg-[#2a5c4d] h-full rounded-full"
+                            className="bg-[var(--sw-accent)] h-full rounded-full"
                             style={{ width: `${pct}%` }}
                           />
                         </div>
@@ -128,14 +128,14 @@ export default function ReportsPage() {
             </div>
 
             {/* Payer Contributions */}
-            <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-6 shadow-xs space-y-4">
-              <h2 className="font-serif font-bold text-sm text-[#1c2826] pb-2 border-b border-[#ece6d9] flex items-center gap-2">
-                <BarChart3 className="w-4 h-4 text-[#3d6380]" />
+            <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-6 shadow-xs space-y-4">
+              <h2 className="font-serif font-bold text-sm text-[var(--sw-ink)] pb-2 border-b border-[var(--sw-border-soft)] flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-[var(--sw-blue)]" />
                 <span>Contributions by Payer</span>
               </h2>
 
               {sortedPayers.length === 0 ? (
-                <div className="text-center py-6 text-xs text-[#70695b]">
+                <div className="text-center py-6 text-xs text-[var(--sw-muted)]">
                   No active expenses recorded.
                 </div>
               ) : (
@@ -145,14 +145,14 @@ export default function ReportsPage() {
                     return (
                       <div key={payer} className="space-y-1 text-xs">
                         <div className="flex justify-between items-baseline">
-                          <span className="font-medium text-[#1c2826]">{payer}</span>
-                          <span className="font-mono tabular-nums text-[#554e42]">
+                          <span className="font-medium text-[var(--sw-ink)]">{payer}</span>
+                          <span className="font-mono tabular-nums text-[var(--sw-body)]">
                             {formatMoney(amount, group?.canonicalCurrency)} ({pct}%)
                           </span>
                         </div>
-                        <div className="w-full bg-[#ede7da] rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-[var(--sw-warm)] rounded-full h-2 overflow-hidden">
                           <div
-                            className="bg-[#3d6380] h-full rounded-full"
+                            className="bg-[var(--sw-blue)] h-full rounded-full"
                             style={{ width: `${pct}%` }}
                           />
                         </div>
