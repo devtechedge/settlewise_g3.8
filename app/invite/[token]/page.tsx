@@ -45,54 +45,54 @@ export default function InviteAcceptPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+    <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
       <DisclaimerBanner />
       <Navbar />
 
       <main className="flex-1 flex items-center justify-center p-4 py-12">
-        <div className="max-w-md w-full bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-8 shadow-sm space-y-6 text-center">
-          <div className="w-12 h-12 rounded-full bg-[#ede7da] text-[#2a5c4d] flex items-center justify-center mx-auto">
+        <div className="max-w-md w-full bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-8 shadow-sm space-y-6 text-center">
+          <div className="w-12 h-12 rounded-full bg-[var(--sw-warm)] text-[var(--sw-accent)] flex items-center justify-center mx-auto">
             <Users className="w-6 h-6" />
           </div>
 
           {loading ? (
-            <p className="text-xs text-[#70695b]">Verifying invitation token...</p>
+            <p className="text-xs text-[var(--sw-muted)]">Verifying invitation token...</p>
           ) : errorMsg ? (
             <div className="space-y-4">
-              <h2 className="text-lg font-serif font-bold text-[#8c4b2d] flex items-center justify-center gap-2">
+              <h2 className="text-lg font-serif font-bold text-[var(--sw-rust)] flex items-center justify-center gap-2">
                 <AlertCircle className="w-5 h-5" />
                 <span>Invitation Error</span>
               </h2>
-              <p className="text-xs text-[#554e42]">{errorMsg}</p>
+              <p className="text-xs text-[var(--sw-body)]">{errorMsg}</p>
             </div>
           ) : (
             <div className="space-y-4">
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#70695b]">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--sw-muted)]">
                   Group Invitation
                 </span>
-                <h2 className="text-xl font-serif font-bold text-[#1c2826] mt-1">
-                  Join "{invData?.groupName}"
+                <h2 className="text-xl font-serif font-bold text-[var(--sw-ink)] mt-1">
+                  Join “{invData?.groupName}”
                 </h2>
                 {invData?.groupDescription && (
-                  <p className="text-xs text-[#554e42] mt-1 italic">
-                    "{invData.groupDescription}"
+                  <p className="text-xs text-[var(--sw-body)] mt-1 italic">
+                    “{invData.groupDescription}”
                   </p>
                 )}
               </div>
 
-              <div className="bg-[#f7f4eb] border border-[#e2dacf] p-3 rounded-lg text-xs space-y-1.5 text-left">
+              <div className="bg-[var(--sw-surface-soft)] border border-[var(--sw-border-soft)] p-3 rounded-lg text-xs space-y-1.5 text-left">
                 <div className="flex justify-between">
-                  <span className="text-[#70695b]">Invited Role:</span>
-                  <span className="font-semibold text-[#1c2826]">{invData?.invitation?.role}</span>
+                  <span className="text-[var(--sw-muted)]">Invited Role:</span>
+                  <span className="font-semibold text-[var(--sw-ink)]">{invData?.invitation?.role}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#70695b]">Currency:</span>
-                  <span className="font-mono text-[#1c2826]">{invData?.currency}</span>
+                  <span className="text-[var(--sw-muted)]">Currency:</span>
+                  <span className="font-mono text-[var(--sw-ink)]">{invData?.currency}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#70695b]">Status:</span>
-                  <span className="text-[#2a5c4d] font-semibold">Active & Valid</span>
+                  <span className="text-[var(--sw-muted)]">Status:</span>
+                  <span className="text-[var(--sw-accent)] font-semibold">Active & Valid</span>
                 </div>
               </div>
 
@@ -100,7 +100,7 @@ export default function InviteAcceptPage() {
                 type="button"
                 disabled={accepting}
                 onClick={handleAccept}
-                className="w-full py-2.5 px-4 bg-[#2a5c4d] hover:bg-[#20473b] text-white rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-2 shadow-xs disabled:opacity-50"
+                className="w-full py-2.5 px-4 bg-[var(--sw-accent)] hover:bg-[var(--sw-accent-strong)] text-[var(--sw-on-ink)] rounded-md text-xs font-semibold transition-colors flex items-center justify-center gap-2 shadow-xs disabled:opacity-50"
               >
                 <span>{accepting ? 'Joining Group...' : 'Accept Invitation & Open Ledger'}</span>
                 <ArrowRight className="w-4 h-4" />

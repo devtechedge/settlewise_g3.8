@@ -6,37 +6,37 @@ import { ShieldAlert, Scale, HelpCircle } from 'lucide-react';
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+    <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
       <DisclaimerBanner />
       <Navbar />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 py-12 sm:px-6 space-y-8">
         <div>
-          <h1 className="font-serif text-3xl font-bold text-[#1c2826]">
+          <h1 className="font-serif text-3xl font-bold text-[var(--sw-ink)]">
             Terms of Service & Non-Payment Disclaimer
           </h1>
-          <p className="text-xs text-[#70695b] mt-1 font-mono">
+          <p className="text-xs text-[var(--sw-muted)] mt-1 font-mono">
             Settlewise Regulatory Boundaries
           </p>
         </div>
 
-        <div className="space-y-6 text-xs text-[#443e33] leading-relaxed bg-[#fcfbf7] border border-[#e5ded0] p-6 sm:p-8 rounded-xl shadow-xs">
+        <div className="space-y-6 text-xs text-[#443e33] leading-relaxed bg-[var(--sw-surface)] border border-[var(--sw-border)] p-6 sm:p-8 rounded-xl shadow-xs">
           <section className="space-y-2">
-            <h2 className="text-base font-serif font-bold text-[#8c4b2d] flex items-center gap-2">
-              <ShieldAlert className="w-5 h-5 text-[#8c4b2d]" />
+            <h2 className="text-base font-serif font-bold text-[var(--sw-rust)] flex items-center gap-2">
+              <ShieldAlert className="w-5 h-5 text-[var(--sw-rust)]" />
               <span>1. Essential Financial Boundary</span>
             </h2>
-            <div className="p-3 bg-[#fdf2ee] border border-[#f3cbbd] rounded-md font-medium text-[#7a3419]">
+            <div className="p-3 bg-[var(--sw-danger-bg)] border border-[var(--sw-danger-border)] rounded-md font-medium text-[var(--sw-rust-deep)]">
               Settlewise is NOT a bank, payment processor, credit facility, money transmitter, or provider of financial advice. Settlewise does not initiate, authorize, or facilitate real-world monetary transfers.
             </div>
             <p>
-              The label "Suggested settlement plan" represents an algorithmic recommendation intended to simplify inter-participant debt. Clicking "Record Reimbursement" serves solely as a bookkeeping acknowledgment that participants have settled outside the application.
+              The label “Suggested settlement plan” represents an algorithmic recommendation intended to simplify inter-participant debt. Clicking “Record Reimbursement” serves solely as a bookkeeping acknowledgment that participants have settled outside the application.
             </p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base font-serif font-bold text-[#1c2826] flex items-center gap-2">
-              <Scale className="w-4 h-4 text-[#2a5c4d]" />
+            <h2 className="text-base font-serif font-bold text-[var(--sw-ink)] flex items-center gap-2">
+              <Scale className="w-4 h-4 text-[var(--sw-accent)]" />
               <span>2. Algorithmic Optimization Scope</span>
             </h2>
             <p>
@@ -45,8 +45,8 @@ export default function TermsPage() {
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base font-serif font-bold text-[#1c2826] flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-[#3d6380]" />
+            <h2 className="text-base font-serif font-bold text-[var(--sw-ink)] flex items-center gap-2">
+              <HelpCircle className="w-4 h-4 text-[var(--sw-blue)]" />
               <span>3. User Responsibility & Currency Lock</span>
             </h2>
             <p>

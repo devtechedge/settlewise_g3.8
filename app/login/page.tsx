@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { DisclaimerBanner } from '@/components/DisclaimerBanner.tsx';
@@ -14,6 +14,16 @@ export default function LoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [demoMode, setDemoMode] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/auth/session')
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data.demoMode === 'boolean') setDemoMode(data.demoMode);
+      })
+      .catch(() => {});
+  }, []);
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
@@ -65,38 +75,39 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+    <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
       <DisclaimerBanner />
       <Navbar />
 
       <main className="flex-1 flex items-center justify-center p-4 py-12">
-        <div className="max-w-md w-full bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-8 shadow-sm space-y-6">
+        <div className="max-w-md w-full bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-8 shadow-sm space-y-6">
           <div className="text-center space-y-1">
-            <div className="w-10 h-10 rounded-md bg-[#1c2826] text-white flex items-center justify-center font-bold text-lg mx-auto mb-3">
+            <div className="w-10 h-10 rounded-md bg-[var(--sw-ink)] text-[var(--sw-on-ink)] flex items-center justify-center font-bold text-lg mx-auto mb-3">
               SW
             </div>
-            <h1 className="text-xl font-serif font-bold text-[#1c2826]">
+            <h1 className="text-xl font-serif font-bold text-[var(--sw-ink)]">
               Sign In to Settlewise
             </h1>
-            <p className="text-xs text-[#70695b]">
+            <p className="text-xs text-[var(--sw-muted)]">
               Access your auditable shared expense ledgers
             </p>
           </div>
 
           {errorMsg && (
-            <div className="p-3 bg-[#fdf2ee] border border-[#f3cbbd] rounded-md text-xs text-[#8c4b2d] flex items-center gap-2">
+            <div className="p-3 bg-[var(--sw-danger-bg)] border border-[var(--sw-danger-border)] rounded-md text-xs text-[var(--sw-rust)] flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{errorMsg}</span>
             </div>
           )}
 
-          {/* Google Sign In */}
-          <div>
+          {/* Google Sign In (only when a production backend is configured) */}
+          {!demoMode && (
+            <div>
             <button
               type="button"
               disabled={loading}
               onClick={handleGoogleSignIn}
-              className="w-full flex items-center justify-center gap-3 py-2.5 px-4 bg-white hover:bg-[#faf7ee] text-[#1c2826] border border-[#cfc6b5] rounded-md text-xs font-semibold shadow-xs transition-colors disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 py-2.5 px-4 bg-[var(--sw-input)] hover:bg-[var(--sw-hover)] text-[var(--sw-ink)] border border-[var(--sw-border-strong)] rounded-md text-xs font-semibold shadow-xs transition-colors disabled:opacity-50"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path
@@ -118,15 +129,16 @@ export default function LoginPage() {
               </svg>
               <span>Continue with Google</span>
             </button>
-          </div>
+            </div>
+          )}
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#e5ded0]" />
+              <div className="w-full border-t border-[var(--sw-border)]" />
             </div>
             <div className="relative flex justify-center text-[10px] uppercase font-mono tracking-wider">
-              <span className="bg-[#fcfbf7] px-2 text-[#70695b]">
-                Or Instant Evaluator Access
+              <span className="bg-[var(--sw-surface)] px-2 text-[var(--sw-muted)]">
+                Or try it instantly with a demo role
               </span>
             </div>
           </div>
@@ -143,23 +155,25 @@ export default function LoginPage() {
                 type="button"
                 disabled={loading}
                 onClick={() => handleDemoSignIn(ev.id)}
-                className="w-full text-left p-2.5 rounded-md border border-[#dfd7c8] bg-[#f7f4eb] hover:bg-[#ede7da] transition-all flex items-center justify-between text-xs"
+                className="w-full text-left p-2.5 rounded-md border border-[var(--sw-border)] bg-[var(--sw-surface-soft)] hover:bg-[var(--sw-warm)] transition-all flex items-center justify-between text-xs"
               >
                 <div>
-                  <div className="font-semibold text-[#1c2826]">{ev.name}</div>
-                  <div className="text-[10px] text-[#70695b]">{ev.role}</div>
+                  <div className="font-semibold text-[var(--sw-ink)]">{ev.name}</div>
+                  <div className="text-[10px] text-[var(--sw-muted)]">{ev.role}</div>
                 </div>
-                <ArrowRight className="w-3.5 h-3.5 text-[#554e42]" />
+                <ArrowRight className="w-3.5 h-3.5 text-[var(--sw-body)]" />
               </button>
             ))}
           </div>
 
-          <div className="text-center text-xs text-[#70695b] pt-2">
-            Don't have an account?{' '}
-            <Link href="/signup" className="text-[#2a5c4d] font-semibold hover:underline">
-              Sign up
-            </Link>
-          </div>
+          {!demoMode && (
+            <div className="text-center text-xs text-[var(--sw-muted)] pt-2">
+              Don’t have an account?{' '}
+              <Link href="/signup" className="text-[var(--sw-accent)] font-semibold hover:underline">
+                Sign up
+              </Link>
+            </div>
+          )}
         </div>
       </main>
     </div>

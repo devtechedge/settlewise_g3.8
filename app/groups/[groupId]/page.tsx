@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { DisclaimerBanner } from '@/components/DisclaimerBanner.tsx';
@@ -28,7 +28,7 @@ export default function GroupOverviewPage() {
   const [recentExpenses, setRecentExpenses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     if (!groupId) return;
     Promise.all([
       fetch(`/api/groups/${groupId}`).then((r) => r.json()),
@@ -42,18 +42,18 @@ export default function GroupOverviewPage() {
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  };
+  }, [groupId]);
 
   useEffect(() => {
     loadData();
-  }, [groupId]);
+  }, [loadData]);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+      <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
         <DisclaimerBanner />
         <Navbar groupId={groupId} />
-        <div className="p-12 text-center text-xs text-[#70695b]">
+        <div className="p-12 text-center text-xs text-[var(--sw-muted)]">
           Loading group overview from PostgreSQL...
         </div>
       </div>
@@ -62,10 +62,10 @@ export default function GroupOverviewPage() {
 
   if (!group || group.error) {
     return (
-      <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+      <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
         <DisclaimerBanner />
         <Navbar groupId={groupId} />
-        <div className="p-12 text-center text-xs text-[#8c4b2d]">
+        <div className="p-12 text-center text-xs text-[var(--sw-rust)]">
           {group?.error || 'Group not found or access denied.'}
         </div>
       </div>
@@ -84,38 +84,38 @@ export default function GroupOverviewPage() {
     : null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+    <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
       <DisclaimerBanner />
       <Navbar groupId={groupId} />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 w-full space-y-6">
         {/* Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#e5ded0] gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--sw-border)] gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#1c2826]">
+              <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[var(--sw-ink)]">
                 {group.name}
               </h1>
-              <span className="text-xs font-mono px-2 py-0.5 rounded bg-[#ede7da] text-[#554e42]">
+              <span className="text-xs font-mono px-2 py-0.5 rounded bg-[var(--sw-warm)] text-[var(--sw-body)]">
                 {group.canonicalCurrency}
               </span>
             </div>
             {group.description && (
-              <p className="text-xs text-[#70695b] mt-1">{group.description}</p>
+              <p className="text-xs text-[var(--sw-muted)] mt-1">{group.description}</p>
             )}
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
             <Link
               href={`/groups/${groupId}/expenses/new`}
-              className="px-3.5 py-2 bg-[#2a5c4d] hover:bg-[#20473b] text-white rounded-md text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors"
+              className="px-3.5 py-2 bg-[var(--sw-accent)] hover:bg-[var(--sw-accent-strong)] text-[var(--sw-on-ink)] rounded-md text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors"
             >
               <PlusCircle className="w-3.5 h-3.5" />
               <span>Record Expense</span>
             </Link>
             <Link
               href={`/groups/${groupId}/settlements`}
-              className="px-3.5 py-2 bg-[#f2ede2] hover:bg-[#eae3d5] text-[#1c2826] border border-[#d8d0bf] rounded-md text-xs font-semibold flex items-center gap-1.5 transition-colors"
+              className="px-3.5 py-2 bg-[var(--sw-surface-muted)] hover:bg-[var(--sw-warm)] text-[var(--sw-ink)] border border-[var(--sw-border-strong)] rounded-md text-xs font-semibold flex items-center gap-1.5 transition-colors"
             >
               <Scale className="w-3.5 h-3.5" />
               <span>Settlement Plan</span>
@@ -126,36 +126,36 @@ export default function GroupOverviewPage() {
         {/* Metric Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Total Spending */}
-          <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-lg p-4 shadow-xs space-y-1">
-            <span className="text-[11px] font-semibold text-[#70695b] uppercase tracking-wider">
+          <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-lg p-4 shadow-xs space-y-1">
+            <span className="text-[11px] font-semibold text-[var(--sw-muted)] uppercase tracking-wider">
               Total Spending
             </span>
-            <div className="font-mono text-2xl font-bold text-[#1c2826] tabular-nums">
+            <div className="font-mono text-2xl font-bold text-[var(--sw-ink)] tabular-nums">
               {formatMoney(totalSpendingMinor, group.canonicalCurrency)}
             </div>
-            <div className="text-[10px] text-[#70695b]">Across all active records</div>
+            <div className="text-[10px] text-[var(--sw-muted)]">Across all active records</div>
           </div>
 
           {/* Budget Progress */}
-          <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-lg p-4 shadow-xs space-y-2">
-            <div className="flex justify-between items-center text-[11px] font-semibold uppercase tracking-wider text-[#70695b]">
+          <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-lg p-4 shadow-xs space-y-2">
+            <div className="flex justify-between items-center text-[11px] font-semibold uppercase tracking-wider text-[var(--sw-muted)]">
               <span>Budget Usage</span>
               {budgetPercent !== null && (
-                <span className={budgetPercent > 100 ? 'text-[#8c4b2d]' : 'text-[#2a5c4d]'}>
+                <span className={budgetPercent > 100 ? 'text-[var(--sw-rust)]' : 'text-[var(--sw-accent)]'}>
                   {budgetPercent}%
                 </span>
               )}
             </div>
-            <div className="font-mono text-xs font-bold text-[#1c2826]">
+            <div className="font-mono text-xs font-bold text-[var(--sw-ink)]">
               {budgetMinor
                 ? `${formatMoney(budgetMinor, group.canonicalCurrency)} / ${group.budgetPeriod}`
                 : 'No budget set'}
             </div>
             {budgetPercent !== null && (
-              <div className="w-full bg-[#ede7da] rounded-full h-1.5 overflow-hidden">
+              <div className="w-full bg-[var(--sw-warm)] rounded-full h-1.5 overflow-hidden">
                 <div
                   className={`h-full rounded-full ${
-                    budgetPercent > 100 ? 'bg-[#8c4b2d]' : 'bg-[#2a5c4d]'
+                    budgetPercent > 100 ? 'bg-[var(--sw-rust)]' : 'bg-[var(--sw-accent)]'
                   }`}
                   style={{ width: `${Math.min(budgetPercent, 100)}%` }}
                 />
@@ -164,11 +164,11 @@ export default function GroupOverviewPage() {
           </div>
 
           {/* Settlement Value */}
-          <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-lg p-4 shadow-xs space-y-1">
-            <span className="text-[11px] font-semibold text-[#70695b] uppercase tracking-wider">
+          <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-lg p-4 shadow-xs space-y-1">
+            <span className="text-[11px] font-semibold text-[var(--sw-muted)] uppercase tracking-wider">
               Unsettled Transfers
             </span>
-            <div className="font-mono text-2xl font-bold text-[#8c4b2d] tabular-nums">
+            <div className="font-mono text-2xl font-bold text-[var(--sw-rust)] tabular-nums">
               {settlementState?.plan
                 ? formatMoney(
                     BigInt(settlementState.plan.totalSettlementValueMinorUnits),
@@ -176,40 +176,40 @@ export default function GroupOverviewPage() {
                   )
                 : '—'}
             </div>
-            <div className="text-[10px] text-[#70695b]">
+            <div className="text-[10px] text-[var(--sw-muted)]">
               {settlementState?.plan?.transfers?.length || 0} transfer(s) to balance
             </div>
           </div>
 
           {/* Participants */}
-          <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-lg p-4 shadow-xs space-y-1">
-            <span className="text-[11px] font-semibold text-[#70695b] uppercase tracking-wider">
+          <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-lg p-4 shadow-xs space-y-1">
+            <span className="text-[11px] font-semibold text-[var(--sw-muted)] uppercase tracking-wider">
               Group Roster
             </span>
-            <div className="text-2xl font-bold text-[#1c2826]">
+            <div className="text-2xl font-bold text-[var(--sw-ink)]">
               {group.participants?.length || 0}{' '}
-              <span className="text-xs font-normal text-[#70695b]">members</span>
+              <span className="text-xs font-normal text-[var(--sw-muted)]">members</span>
             </div>
-            <div className="text-[10px] text-[#70695b]">
-              Your role: <strong className="text-[#1c2826]">{group.userRole}</strong>
+            <div className="text-[10px] text-[var(--sw-muted)]">
+              Your role: <strong className="text-[var(--sw-ink)]">{group.userRole}</strong>
             </div>
           </div>
         </div>
 
         {/* Current Balances Grid */}
-        <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-lg p-5 shadow-xs space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-[#ece6d9]">
+        <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-lg p-5 shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[var(--sw-border-soft)]">
             <div>
-              <h2 className="text-base font-serif font-bold text-[#1c2826]">
+              <h2 className="text-base font-serif font-bold text-[var(--sw-ink)]">
                 Participant Net Balances
               </h2>
-              <p className="text-xs text-[#70695b]">
+              <p className="text-xs text-[var(--sw-muted)]">
                 Positive = is owed money (creditor); Negative = owes money (debtor). Sum of all balances is exactly zero.
               </p>
             </div>
             <Link
               href={`/groups/${groupId}/settlements`}
-              className="text-xs text-[#2a5c4d] hover:underline font-semibold flex items-center gap-1"
+              className="text-xs text-[var(--sw-accent)] hover:underline font-semibold flex items-center gap-1"
             >
               <span>Settlement Details</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -226,7 +226,7 @@ export default function GroupOverviewPage() {
               return (
                 <div
                   key={b.participantId}
-                  className="bg-[#f7f4eb] border border-[#e2dacf] p-3.5 rounded-md flex flex-col justify-between space-y-2"
+                  className="bg-[var(--sw-surface-soft)] border border-[var(--sw-border-soft)] p-3.5 rounded-md flex flex-col justify-between space-y-2"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
@@ -234,30 +234,30 @@ export default function GroupOverviewPage() {
                         className="w-3 h-3 rounded-full"
                         style={{ backgroundColor: b.color || '#4a6b6c' }}
                       />
-                      <span className="font-semibold text-xs text-[#1c2826]">{b.name}</span>
+                      <span className="font-semibold text-xs text-[var(--sw-ink)]">{b.name}</span>
                     </div>
                     <span
                       className={`text-[10px] font-semibold px-2 py-0.5 rounded ${
                         isPositive
-                          ? 'bg-[#c5d8cb] text-[#2a5c4d]'
+                          ? 'bg-[var(--sw-positive-bg)] text-[var(--sw-accent)]'
                           : isNegative
-                          ? 'bg-[#f3cbbd] text-[#8c4b2d]'
-                          : 'bg-[#ede7da] text-[#554e42]'
+                          ? 'bg-[#f3cbbd] text-[var(--sw-rust)]'
+                          : 'bg-[var(--sw-warm)] text-[var(--sw-body)]'
                       }`}
                     >
                       {isPositive ? 'Is Owed' : isNegative ? 'Owes' : 'Settled'}
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-baseline pt-1 border-t border-[#ebe4d6]">
-                    <span className="text-[11px] text-[#70695b]">Net Balance:</span>
+                  <div className="flex justify-between items-baseline pt-1 border-t border-[var(--sw-divide)]">
+                    <span className="text-[11px] text-[var(--sw-muted)]">Net Balance:</span>
                     <span
                       className={`font-mono font-bold text-sm tabular-nums ${
                         isPositive
-                          ? 'text-[#2a5c4d]'
+                          ? 'text-[var(--sw-accent)]'
                           : isNegative
-                          ? 'text-[#8c4b2d]'
-                          : 'text-[#554e42]'
+                          ? 'text-[var(--sw-rust)]'
+                          : 'text-[var(--sw-body)]'
                       }`}
                     >
                       {formatMoney(net, group.canonicalCurrency, { showPlusSign: true })}
@@ -272,17 +272,17 @@ export default function GroupOverviewPage() {
         {/* Suggested Next Actions & Recent Expenses */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Suggested Transfers Summary */}
-          <div className="lg:col-span-1 bg-[#fcfbf7] border border-[#e5ded0] rounded-lg p-5 shadow-xs space-y-3 flex flex-col justify-between">
+          <div className="lg:col-span-1 bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-lg p-5 shadow-xs space-y-3 flex flex-col justify-between">
             <div>
-              <h3 className="text-sm font-serif font-bold text-[#1c2826]">
+              <h3 className="text-sm font-serif font-bold text-[var(--sw-ink)]">
                 Next Settlement Action
               </h3>
-              <p className="text-xs text-[#70695b] mt-0.5 mb-3">
+              <p className="text-xs text-[var(--sw-muted)] mt-0.5 mb-3">
                 Current recommended reimbursements to balance the group ledger.
               </p>
 
               {settlementState?.plan?.transfers?.length === 0 ? (
-                <div className="p-4 bg-[#f2ede2] rounded text-xs text-[#2a5c4d] text-center font-medium">
+                <div className="p-4 bg-[var(--sw-surface-muted)] rounded text-xs text-[var(--sw-accent)] text-center font-medium">
                   ✓ All participant balances are zero. Fully settled.
                 </div>
               ) : (
@@ -290,14 +290,14 @@ export default function GroupOverviewPage() {
                   {settlementState?.plan?.transfers?.slice(0, 3).map((t: any, idx: number) => (
                     <div
                       key={idx}
-                      className="p-2.5 bg-[#f7f4eb] border border-[#e2dacf] rounded text-xs flex items-center justify-between"
+                      className="p-2.5 bg-[var(--sw-surface-soft)] border border-[var(--sw-border-soft)] rounded text-xs flex items-center justify-between"
                     >
                       <div className="truncate mr-2">
-                        <span className="font-semibold text-[#8c4b2d]">{t.senderName}</span>
-                        <span className="text-[#70695b]"> pays </span>
-                        <span className="font-semibold text-[#2a5c4d]">{t.recipientName}</span>
+                        <span className="font-semibold text-[var(--sw-rust)]">{t.senderName}</span>
+                        <span className="text-[var(--sw-muted)]"> pays </span>
+                        <span className="font-semibold text-[var(--sw-accent)]">{t.recipientName}</span>
                       </div>
-                      <span className="font-mono font-bold text-xs tabular-nums text-[#1c2826] shrink-0">
+                      <span className="font-mono font-bold text-xs tabular-nums text-[var(--sw-ink)] shrink-0">
                         {formatMoney(BigInt(t.amountMinorUnits), group.canonicalCurrency)}
                       </span>
                     </div>
@@ -308,21 +308,21 @@ export default function GroupOverviewPage() {
 
             <Link
               href={`/groups/${groupId}/settlements`}
-              className="w-full py-2 bg-[#1c2826] hover:bg-[#2c3d3a] text-white rounded text-xs font-semibold text-center transition-colors shadow-xs"
+              className="w-full py-2 bg-[var(--sw-ink)] hover:bg-[var(--sw-ink-soft)] text-[var(--sw-on-ink)] rounded text-xs font-semibold text-center transition-colors shadow-xs"
             >
               View Full Settlement Plan & Record Payment
             </Link>
           </div>
 
           {/* Recent Activity */}
-          <div className="lg:col-span-2 bg-[#fcfbf7] border border-[#e5ded0] rounded-lg p-5 shadow-xs space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-[#ece6d9]">
-              <h3 className="text-sm font-serif font-bold text-[#1c2826]">
+          <div className="lg:col-span-2 bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-lg p-5 shadow-xs space-y-3">
+            <div className="flex items-center justify-between pb-2 border-b border-[var(--sw-border-soft)]">
+              <h3 className="text-sm font-serif font-bold text-[var(--sw-ink)]">
                 Recent Expenses
               </h3>
               <Link
                 href={`/groups/${groupId}/expenses`}
-                className="text-xs text-[#2a5c4d] hover:underline font-semibold flex items-center gap-1"
+                className="text-xs text-[var(--sw-accent)] hover:underline font-semibold flex items-center gap-1"
               >
                 <span>View Full Ledger</span>
                 <ArrowRight className="w-3 h-3" />
@@ -330,35 +330,35 @@ export default function GroupOverviewPage() {
             </div>
 
             {recentExpenses.length === 0 ? (
-              <div className="text-center py-6 text-xs text-[#70695b]">
+              <div className="text-center py-6 text-xs text-[var(--sw-muted)]">
                 No expenses recorded yet.
               </div>
             ) : (
-              <div className="divide-y divide-[#f2eee3]">
+              <div className="divide-y divide-[var(--sw-divide)]">
                 {recentExpenses.map((exp) => (
                   <div
                     key={exp.id}
                     className="py-2.5 flex items-center justify-between gap-3 text-xs"
                   >
                     <div>
-                      <div className="font-semibold text-[#1c2826] flex items-center gap-1.5">
+                      <div className="font-semibold text-[var(--sw-ink)] flex items-center gap-1.5">
                         <Link
                           href={`/groups/${groupId}/expenses/${exp.id}`}
-                          className="hover:underline hover:text-[#2a5c4d]"
+                          className="hover:underline hover:text-[var(--sw-accent)]"
                         >
                           {exp.description}
                         </Link>
                         {exp.status === 'VOIDED' && (
-                          <span className="text-[9px] px-1.5 py-0.2 bg-[#f3cbbd] text-[#8c4b2d] rounded font-semibold">
+                          <span className="text-[9px] px-1.5 py-0.2 bg-[#f3cbbd] text-[var(--sw-rust)] rounded font-semibold">
                             VOIDED
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-[#70695b] mt-0.5">
+                      <div className="text-[11px] text-[var(--sw-muted)] mt-0.5">
                         {exp.occurrenceDate} • Paid by {exp.payerName} ({exp.category})
                       </div>
                     </div>
-                    <div className="text-right font-mono font-bold text-xs tabular-nums text-[#1c2826]">
+                    <div className="text-right font-mono font-bold text-xs tabular-nums text-[var(--sw-ink)]">
                       {formatMoney(BigInt(exp.amountMinorUnits), group.canonicalCurrency)}
                     </div>
                   </div>

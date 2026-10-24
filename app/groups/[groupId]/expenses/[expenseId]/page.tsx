@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { DisclaimerBanner } from '@/components/DisclaimerBanner.tsx';
@@ -56,7 +56,7 @@ export default function ExpenseDetailPage() {
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const fetchDetails = () => {
+  const fetchDetails = useCallback(() => {
     if (!expenseId || !groupId) return;
     Promise.all([
       fetch(`/api/expenses/${expenseId}`).then((r) => r.json()),
@@ -106,11 +106,11 @@ export default function ExpenseDetailPage() {
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  };
+  }, [expenseId, groupId]);
 
   useEffect(() => {
     fetchDetails();
-  }, [expenseId, groupId]);
+  }, [fetchDetails]);
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -174,10 +174,10 @@ export default function ExpenseDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+      <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
         <DisclaimerBanner />
         <Navbar groupId={groupId} />
-        <div className="p-12 text-center text-xs text-[#70695b]">
+        <div className="p-12 text-center text-xs text-[var(--sw-muted)]">
           Loading expense records...
         </div>
       </div>
@@ -186,10 +186,10 @@ export default function ExpenseDetailPage() {
 
   if (!expense || expense.error) {
     return (
-      <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+      <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
         <DisclaimerBanner />
         <Navbar groupId={groupId} />
-        <div className="p-12 text-center text-xs text-[#8c4b2d]">
+        <div className="p-12 text-center text-xs text-[var(--sw-rust)]">
           {expense?.error || 'Expense not found.'}
         </div>
       </div>
@@ -199,7 +199,7 @@ export default function ExpenseDetailPage() {
   const isVoided = expense.status === 'VOIDED';
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+    <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
       <DisclaimerBanner />
       <Navbar groupId={groupId} />
 
@@ -207,7 +207,7 @@ export default function ExpenseDetailPage() {
         <div>
           <Link
             href={`/groups/${groupId}/expenses`}
-            className="text-xs text-[#70695b] hover:text-[#1c2826] flex items-center gap-1 font-medium mb-2"
+            className="text-xs text-[var(--sw-muted)] hover:text-[var(--sw-ink)] flex items-center gap-1 font-medium mb-2"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Ledger</span>
@@ -215,19 +215,19 @@ export default function ExpenseDetailPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="font-serif text-2xl font-bold text-[#1c2826]">
+                <h1 className="font-serif text-2xl font-bold text-[var(--sw-ink)]">
                   {expense.description}
                 </h1>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#ede7da] text-[#554e42]">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--sw-warm)] text-[var(--sw-body)]">
                   rev {expense.revision}
                 </span>
                 {isVoided && (
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-[#f3cbbd] text-[#8c4b2d] font-semibold">
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-[#f3cbbd] text-[var(--sw-rust)] font-semibold">
                     VOIDED
                   </span>
                 )}
               </div>
-              <p className="text-xs text-[#70695b] mt-0.5">
+              <p className="text-xs text-[var(--sw-muted)] mt-0.5">
                 {expense.category} • Recorded for {expense.occurrenceDate}
               </p>
             </div>
@@ -236,7 +236,7 @@ export default function ExpenseDetailPage() {
               <button
                 type="button"
                 onClick={() => setIsEditing(true)}
-                className="px-3 py-1.5 bg-[#2a5c4d] hover:bg-[#20473b] text-white rounded text-xs font-semibold self-start sm:self-auto flex items-center gap-1.5 shadow-xs"
+                className="px-3 py-1.5 bg-[var(--sw-accent)] hover:bg-[var(--sw-accent-strong)] text-[var(--sw-on-ink)] rounded text-xs font-semibold self-start sm:self-auto flex items-center gap-1.5 shadow-xs"
               >
                 <Edit2 className="w-3.5 h-3.5" />
                 <span>Edit / Correct Expense</span>
@@ -246,7 +246,7 @@ export default function ExpenseDetailPage() {
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-[#fdf2ee] border border-[#f3cbbd] rounded-md text-xs text-[#8c4b2d] flex items-center gap-2">
+          <div className="p-3 bg-[var(--sw-danger-bg)] border border-[var(--sw-danger-border)] rounded-md text-xs text-[var(--sw-rust)] flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
@@ -254,23 +254,23 @@ export default function ExpenseDetailPage() {
 
         {/* View Details / Edit Form */}
         {isEditing ? (
-          <form onSubmit={handleUpdate} className="bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-6 sm:p-8 shadow-sm space-y-5">
-            <div className="pb-3 border-b border-[#ece6d9] flex justify-between items-center">
-              <h2 className="font-serif font-bold text-base text-[#1c2826]">
+          <form onSubmit={handleUpdate} className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-6 sm:p-8 shadow-sm space-y-5">
+            <div className="pb-3 border-b border-[var(--sw-border-soft)] flex justify-between items-center">
+              <h2 className="font-serif font-bold text-base text-[var(--sw-ink)]">
                 Correct Expense Details
               </h2>
-              <span className="text-xs text-[#70695b] font-mono">
+              <span className="text-xs text-[var(--sw-muted)] font-mono">
                 Updating from Rev {expense.revision} → Rev {expense.revision + 1}
               </span>
             </div>
 
-            <div className="p-3 bg-[#f4eee1] border border-[#e2dacf] rounded text-xs text-[#554e42] leading-relaxed">
+            <div className="p-3 bg-[#f4eee1] border border-[var(--sw-border-soft)] rounded text-xs text-[var(--sw-body)] leading-relaxed">
               <strong>Audit Requirement:</strong> Financial corrections preserve prior records. Please state a descriptive reason for this modification.
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                   Description *
                 </label>
                 <input
@@ -278,12 +278,12 @@ export default function ExpenseDetailPage() {
                   required
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded text-xs focus:outline-[#2a5c4d]"
+                  className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs focus:outline-[var(--sw-accent)]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                   Amount ({group?.canonicalCurrency}) *
                 </label>
                 <input
@@ -292,18 +292,18 @@ export default function ExpenseDetailPage() {
                   required
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded text-xs font-mono font-semibold focus:outline-[#2a5c4d]"
+                  className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs font-mono font-semibold focus:outline-[var(--sw-accent)]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                   Category
                 </label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded text-xs focus:outline-[#2a5c4d]"
+                  className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs focus:outline-[var(--sw-accent)]"
                 >
                   <option value="Groceries">Groceries</option>
                   <option value="Rent & Utilities">Rent & Utilities</option>
@@ -316,13 +316,13 @@ export default function ExpenseDetailPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                   Paid By (Payer)
                 </label>
                 <select
                   value={payerParticipantId}
                   onChange={(e) => setPayerParticipantId(e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded text-xs focus:outline-[#2a5c4d]"
+                  className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs focus:outline-[var(--sw-accent)]"
                 >
                   {participants.map((p) => (
                     <option key={p.id} value={p.id}>
@@ -333,7 +333,7 @@ export default function ExpenseDetailPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#5a5448] mb-1">
+                <label className="block text-xs font-semibold text-[var(--sw-body)] mb-1">
                   Occurrence Date
                 </label>
                 <input
@@ -341,12 +341,12 @@ export default function ExpenseDetailPage() {
                   required
                   value={occurrenceDate}
                   onChange={(e) => setOccurrenceDate(e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded text-xs focus:outline-[#2a5c4d]"
+                  className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs focus:outline-[var(--sw-accent)]"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-[#8c4b2d] mb-1">
+                <label className="block text-xs font-semibold text-[var(--sw-rust)] mb-1">
                   Audit Reason for Modification *
                 </label>
                 <input
@@ -355,7 +355,7 @@ export default function ExpenseDetailPage() {
                   placeholder="e.g. Added omitted receipt items, adjusted split shares"
                   value={editReason}
                   onChange={(e) => setEditReason(e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-[#cfc6b5] rounded text-xs focus:outline-[#8c4b2d]"
+                  className="w-full px-3 py-2 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs focus:outline-[#8c4b2d]"
                 />
               </div>
             </div>
@@ -378,47 +378,47 @@ export default function ExpenseDetailPage() {
               />
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#e2dacf]">
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[var(--sw-border-soft)]">
               <button
                 type="button"
                 onClick={() => setIsEditing(false)}
-                className="px-4 py-2 text-xs text-[#554e42] hover:bg-[#ede7da] rounded"
+                className="px-4 py-2 text-xs text-[var(--sw-body)] hover:bg-[var(--sw-warm)] rounded"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={saving}
-                className="px-5 py-2 bg-[#2a5c4d] hover:bg-[#20473b] text-white rounded text-xs font-semibold disabled:opacity-50"
+                className="px-5 py-2 bg-[var(--sw-accent)] hover:bg-[var(--sw-accent-strong)] text-[var(--sw-on-ink)] rounded text-xs font-semibold disabled:opacity-50"
               >
                 {saving ? 'Saving...' : 'Save Revisions'}
               </button>
             </div>
           </form>
         ) : (
-          <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-6 shadow-sm space-y-6">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pb-4 border-b border-[#ece6d9] text-xs">
+          <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-6 shadow-sm space-y-6">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pb-4 border-b border-[var(--sw-border-soft)] text-xs">
               <div>
-                <span className="text-[#70695b] block">Total Amount:</span>
-                <span className="font-mono text-xl font-bold text-[#1c2826] tabular-nums">
+                <span className="text-[var(--sw-muted)] block">Total Amount:</span>
+                <span className="font-mono text-xl font-bold text-[var(--sw-ink)] tabular-nums">
                   {formatMoney(BigInt(expense.amountMinorUnits), group?.canonicalCurrency)}
                 </span>
               </div>
               <div>
-                <span className="text-[#70695b] block">Paid By:</span>
-                <span className="font-semibold text-sm text-[#1c2826]">
+                <span className="text-[var(--sw-muted)] block">Paid By:</span>
+                <span className="font-semibold text-sm text-[var(--sw-ink)]">
                   {participants.find((p) => p.id === expense.payerParticipantId)?.name || 'Payer'}
                 </span>
               </div>
               <div>
-                <span className="text-[#70695b] block">Category:</span>
-                <span className="font-semibold text-sm text-[#1c2826]">{expense.category}</span>
+                <span className="text-[var(--sw-muted)] block">Category:</span>
+                <span className="font-semibold text-sm text-[var(--sw-ink)]">{expense.category}</span>
               </div>
               <div>
-                <span className="text-[#70695b] block">Status:</span>
+                <span className="text-[var(--sw-muted)] block">Status:</span>
                 <span
                   className={`font-semibold text-xs inline-flex items-center gap-1 ${
-                    isVoided ? 'text-[#8c4b2d]' : 'text-[#2a5c4d]'
+                    isVoided ? 'text-[var(--sw-rust)]' : 'text-[var(--sw-accent)]'
                   }`}
                 >
                   {isVoided ? <XCircle className="w-3.5 h-3.5" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
@@ -428,25 +428,25 @@ export default function ExpenseDetailPage() {
             </div>
 
             {expense.notes && (
-              <div className="p-3 bg-[#f7f4eb] rounded text-xs text-[#554e42]">
+              <div className="p-3 bg-[var(--sw-surface-soft)] rounded text-xs text-[var(--sw-body)]">
                 <strong>Notes:</strong> {expense.notes}
               </div>
             )}
 
             {isVoided && expense.voidReason && (
-              <div className="p-3 bg-[#fdf2ee] border border-[#f3cbbd] rounded text-xs text-[#8c4b2d]">
+              <div className="p-3 bg-[var(--sw-danger-bg)] border border-[var(--sw-danger-border)] rounded text-xs text-[var(--sw-rust)]">
                 <strong>Void Reason:</strong> {expense.voidReason}
               </div>
             )}
 
             {/* Split Breakdown Table */}
             <div>
-              <h3 className="text-xs font-bold text-[#1c2826] uppercase tracking-wider mb-2">
+              <h3 className="text-xs font-bold text-[var(--sw-ink)] uppercase tracking-wider mb-2">
                 Participant Allocations ({expense.splits?.[0]?.allocationMethod} Split)
               </h3>
-              <div className="border border-[#e5ded0] rounded-md overflow-hidden">
+              <div className="border border-[var(--sw-border)] rounded-md overflow-hidden">
                 <table className="w-full text-xs text-left">
-                  <thead className="bg-[#f7f4eb] text-[#70695b] font-mono text-[10px] uppercase border-b border-[#e5ded0]">
+                  <thead className="bg-[var(--sw-surface-soft)] text-[var(--sw-muted)] font-mono text-[10px] uppercase border-b border-[var(--sw-border)]">
                     <tr>
                       <th className="py-2 px-3">Participant</th>
                       <th className="py-2 px-3">Method Details</th>
@@ -455,14 +455,14 @@ export default function ExpenseDetailPage() {
                   </thead>
                   <tbody className="divide-y divide-[#ece6d9]">
                     {expense.splits?.map((s: any) => (
-                      <tr key={s.id} className="hover:bg-[#faf7ee]">
-                        <td className="py-2.5 px-3 font-medium text-[#1c2826]">
+                      <tr key={s.id} className="hover:bg-[var(--sw-hover)]">
+                        <td className="py-2.5 px-3 font-medium text-[var(--sw-ink)]">
                           {s.participantName}
                         </td>
-                        <td className="py-2.5 px-3 text-[#70695b]">
+                        <td className="py-2.5 px-3 text-[var(--sw-muted)]">
                           {s.shareWeight ? `${s.shareWeight} share(s)` : s.basisPoints ? `${(s.basisPoints / 100).toFixed(2)}%` : 'Equal share'}
                         </td>
-                        <td className="py-2.5 px-3 text-right font-mono font-semibold tabular-nums text-[#1c2826]">
+                        <td className="py-2.5 px-3 text-right font-mono font-semibold tabular-nums text-[var(--sw-ink)]">
                           {formatMoney(BigInt(s.allocatedMinorUnits), group?.canonicalCurrency)}
                         </td>
                       </tr>
@@ -476,9 +476,9 @@ export default function ExpenseDetailPage() {
 
         {/* Immutable Revision History */}
         {expense.revisions && expense.revisions.length > 0 && (
-          <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-6 shadow-sm space-y-4">
-            <h3 className="font-serif font-bold text-sm text-[#1c2826] flex items-center gap-2">
-              <History className="w-4 h-4 text-[#2a5c4d]" />
+          <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-6 shadow-sm space-y-4">
+            <h3 className="font-serif font-bold text-sm text-[var(--sw-ink)] flex items-center gap-2">
+              <History className="w-4 h-4 text-[var(--sw-accent)]" />
               <span>Immutable Revision Audit Trail</span>
             </h3>
 
@@ -486,17 +486,17 @@ export default function ExpenseDetailPage() {
               {expense.revisions.map((rev: any) => (
                 <div
                   key={rev.id}
-                  className="p-3.5 bg-[#f7f4eb] border border-[#e2dacf] rounded-lg text-xs space-y-1.5"
+                  className="p-3.5 bg-[var(--sw-surface-soft)] border border-[var(--sw-border-soft)] rounded-lg text-xs space-y-1.5"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono font-bold text-[#1c2826]">
+                    <span className="font-mono font-bold text-[var(--sw-ink)]">
                       Revision {rev.revisionNumber}
                     </span>
-                    <span className="text-[11px] text-[#70695b] font-mono">
+                    <span className="text-[11px] text-[var(--sw-muted)] font-mono">
                       {new Date(rev.createdAt).toLocaleString()}
                     </span>
                   </div>
-                  <div className="text-[#554e42]">
+                  <div className="text-[var(--sw-body)]">
                     <strong>Audit Reason:</strong> {rev.reason}
                   </div>
                 </div>

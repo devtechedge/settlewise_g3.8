@@ -182,53 +182,53 @@ INVALID_DATE,"Missing amount row",,Alice
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4]">
+    <div className="min-h-screen flex flex-col bg-[var(--sw-bg)]">
       <DisclaimerBanner />
       <Navbar groupId={groupId} />
 
       <main className="flex-1 max-w-5xl mx-auto px-4 py-8 sm:px-6 w-full space-y-6">
         <div>
-          <h1 className="font-serif text-2xl font-bold text-[#1c2826]">
+          <h1 className="font-serif text-2xl font-bold text-[var(--sw-ink)]">
             CSV Statement Import & Reconciliation
           </h1>
-          <p className="text-xs text-[#70695b] mt-0.5">
+          <p className="text-xs text-[var(--sw-muted)] mt-0.5">
             Upload bank or credit card statements, map columns, preview normalization, and detect duplicates.
           </p>
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-[#fdf2ee] border border-[#f3cbbd] rounded-md text-xs text-[#8c4b2d] flex items-center gap-2">
+          <div className="p-3 bg-[var(--sw-danger-bg)] border border-[var(--sw-danger-border)] rounded-md text-xs text-[var(--sw-rust)] flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
         )}
 
         {successMsg && (
-          <div className="p-3 bg-[#edf7f0] border border-[#c5d8cb] rounded-md text-xs text-[#2a5c4d] flex items-center gap-2">
+          <div className="p-3 bg-[#edf7f0] border border-[#c5d8cb] rounded-md text-xs text-[var(--sw-accent)] flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>{successMsg}</span>
           </div>
         )}
 
         {/* Step 1: Upload or Preload */}
-        <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#ece6d9] gap-2">
-            <h2 className="font-serif font-bold text-sm text-[#1c2826] flex items-center gap-2">
-              <Upload className="w-4 h-4 text-[#2a5c4d]" />
+        <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[var(--sw-border-soft)] gap-2">
+            <h2 className="font-serif font-bold text-sm text-[var(--sw-ink)] flex items-center gap-2">
+              <Upload className="w-4 h-4 text-[var(--sw-accent)]" />
               <span>Step 1: Choose CSV File</span>
             </h2>
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => loadSampleCsv('valid')}
-                className="px-2.5 py-1 bg-[#ede7da] hover:bg-[#dfd7c8] text-[#1c2826] rounded text-[11px] font-medium"
+                className="px-2.5 py-1 bg-[var(--sw-warm)] hover:bg-[#dfd7c8] text-[var(--sw-ink)] rounded text-[11px] font-medium"
               >
                 Load Valid Sample
               </button>
               <button
                 type="button"
                 onClick={() => loadSampleCsv('malformed')}
-                className="px-2.5 py-1 bg-[#ede7da] hover:bg-[#dfd7c8] text-[#8c4b2d] rounded text-[11px] font-medium"
+                className="px-2.5 py-1 bg-[var(--sw-warm)] hover:bg-[#dfd7c8] text-[var(--sw-rust)] rounded text-[11px] font-medium"
               >
                 Load Malformed Sample
               </button>
@@ -236,12 +236,12 @@ INVALID_DATE,"Missing amount row",,Alice
           </div>
 
           <div className="flex items-center gap-4">
-            <label className="cursor-pointer px-4 py-2 bg-white hover:bg-[#faf7ee] text-[#1c2826] border border-[#cfc6b5] rounded-md text-xs font-semibold inline-flex items-center gap-2 shadow-xs">
+            <label className="cursor-pointer px-4 py-2 bg-[var(--sw-input)] hover:bg-[var(--sw-hover)] text-[var(--sw-ink)] border border-[var(--sw-border-strong)] rounded-md text-xs font-semibold inline-flex items-center gap-2 shadow-xs">
               <Upload className="w-3.5 h-3.5" />
               <span>Select Local CSV File</span>
               <input type="file" accept=".csv,text/csv" onChange={handleFileChange} className="hidden" />
             </label>
-            <span className="text-xs font-mono text-[#554e42]">
+            <span className="text-xs font-mono text-[var(--sw-body)]">
               {fileName || 'No file selected yet'}
             </span>
           </div>
@@ -249,19 +249,19 @@ INVALID_DATE,"Missing amount row",,Alice
 
         {/* Step 2: Column Mapping */}
         {csvHeaders.length > 0 && (
-          <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-6 shadow-xs space-y-4">
-            <h2 className="font-serif font-bold text-sm text-[#1c2826] pb-3 border-b border-[#ece6d9] flex items-center gap-2">
-              <FileSpreadsheet className="w-4 h-4 text-[#2a5c4d]" />
+          <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-6 shadow-xs space-y-4">
+            <h2 className="font-serif font-bold text-sm text-[var(--sw-ink)] pb-3 border-b border-[var(--sw-border-soft)] flex items-center gap-2">
+              <FileSpreadsheet className="w-4 h-4 text-[var(--sw-accent)]" />
               <span>Step 2: Map CSV Headers</span>
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
               <div>
-                <label className="block font-semibold text-[#5a5448] mb-1">Date Column *</label>
+                <label className="block font-semibold text-[var(--sw-body)] mb-1">Date Column *</label>
                 <select
                   value={dateCol}
                   onChange={(e) => setDateCol(e.target.value)}
-                  className="w-full px-2.5 py-1.5 bg-white border border-[#cfc6b5] rounded"
+                  className="w-full px-2.5 py-1.5 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded"
                 >
                   <option value="">-- Select Column --</option>
                   {csvHeaders.map((h) => (
@@ -273,11 +273,11 @@ INVALID_DATE,"Missing amount row",,Alice
               </div>
 
               <div>
-                <label className="block font-semibold text-[#5a5448] mb-1">Description Column *</label>
+                <label className="block font-semibold text-[var(--sw-body)] mb-1">Description Column *</label>
                 <select
                   value={descCol}
                   onChange={(e) => setDescCol(e.target.value)}
-                  className="w-full px-2.5 py-1.5 bg-white border border-[#cfc6b5] rounded"
+                  className="w-full px-2.5 py-1.5 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded"
                 >
                   <option value="">-- Select Column --</option>
                   {csvHeaders.map((h) => (
@@ -289,11 +289,11 @@ INVALID_DATE,"Missing amount row",,Alice
               </div>
 
               <div>
-                <label className="block font-semibold text-[#5a5448] mb-1">Amount Column *</label>
+                <label className="block font-semibold text-[var(--sw-body)] mb-1">Amount Column *</label>
                 <select
                   value={amountCol}
                   onChange={(e) => setAmountCol(e.target.value)}
-                  className="w-full px-2.5 py-1.5 bg-white border border-[#cfc6b5] rounded"
+                  className="w-full px-2.5 py-1.5 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded"
                 >
                   <option value="">-- Select Column --</option>
                   {csvHeaders.map((h) => (
@@ -305,11 +305,11 @@ INVALID_DATE,"Missing amount row",,Alice
               </div>
 
               <div>
-                <label className="block font-semibold text-[#5a5448] mb-1">Payer Column (Optional)</label>
+                <label className="block font-semibold text-[var(--sw-body)] mb-1">Payer Column (Optional)</label>
                 <select
                   value={payerCol}
                   onChange={(e) => setPayerCol(e.target.value)}
-                  className="w-full px-2.5 py-1.5 bg-white border border-[#cfc6b5] rounded"
+                  className="w-full px-2.5 py-1.5 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded"
                 >
                   <option value="">Default to First Participant</option>
                   {csvHeaders.map((h) => (
@@ -321,13 +321,13 @@ INVALID_DATE,"Missing amount row",,Alice
               </div>
 
               <div>
-                <label className="block font-semibold text-[#5a5448] mb-1">Category Column (Optional)</label>
+                <label className="block font-semibold text-[var(--sw-body)] mb-1">Category Column (Optional)</label>
                 <select
                   value={categoryCol}
                   onChange={(e) => setCategoryCol(e.target.value)}
-                  className="w-full px-2.5 py-1.5 bg-white border border-[#cfc6b5] rounded"
+                  className="w-full px-2.5 py-1.5 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded"
                 >
-                  <option value="">Default to 'Other'</option>
+                  <option value="">Default to &apos;Other&apos;</option>
                   {csvHeaders.map((h) => (
                     <option key={h} value={h}>
                       {h}
@@ -341,7 +341,7 @@ INVALID_DATE,"Missing amount row",,Alice
                   type="button"
                   disabled={loadingPreview}
                   onClick={handleGeneratePreview}
-                  className="w-full py-2 bg-[#2a5c4d] hover:bg-[#20473b] text-white rounded font-semibold text-xs transition-colors shadow-xs"
+                  className="w-full py-2 bg-[var(--sw-accent)] hover:bg-[var(--sw-accent-strong)] text-[var(--sw-on-ink)] rounded font-semibold text-xs transition-colors shadow-xs"
                 >
                   {loadingPreview ? 'Validating Batch...' : 'Preview Import Batch'}
                 </button>
@@ -352,17 +352,17 @@ INVALID_DATE,"Missing amount row",,Alice
 
         {/* Step 3: Batch Preview & Resolution */}
         {previewData && (
-          <div className="bg-[#fcfbf7] border border-[#e5ded0] rounded-xl p-6 shadow-sm space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#ece6d9] gap-3">
+          <div className="bg-[var(--sw-surface)] border border-[var(--sw-border)] rounded-xl p-6 shadow-sm space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[var(--sw-border-soft)] gap-3">
               <div>
-                <h2 className="font-serif font-bold text-sm text-[#1c2826] flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#2a5c4d]" />
+                <h2 className="font-serif font-bold text-sm text-[var(--sw-ink)] flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[var(--sw-accent)]" />
                   <span>Step 3: Normalized Batch Preview</span>
                 </h2>
                 <div className="flex items-center gap-3 text-xs mt-1">
-                  <span className="text-[#2a5c4d] font-semibold">{previewData.validRows} Valid</span>
+                  <span className="text-[var(--sw-accent)] font-semibold">{previewData.validRows} Valid</span>
                   <span>•</span>
-                  <span className="text-[#8c4b2d] font-semibold">{previewData.duplicateRows} Duplicate(s)</span>
+                  <span className="text-[var(--sw-rust)] font-semibold">{previewData.duplicateRows} Duplicate(s)</span>
                   <span>•</span>
                   <span className="text-[#b34724] font-semibold">{previewData.errorRows} Error(s)</span>
                 </div>
@@ -370,11 +370,11 @@ INVALID_DATE,"Missing amount row",,Alice
 
               {/* Duplicate policy */}
               <div className="flex items-center gap-2 text-xs">
-                <span className="text-[#554e42] font-semibold">Duplicate Policy:</span>
+                <span className="text-[var(--sw-body)] font-semibold">Duplicate Policy:</span>
                 <select
                   value={duplicatePolicy}
                   onChange={(e) => setDuplicatePolicy(e.target.value as any)}
-                  className="px-2 py-1 bg-white border border-[#cfc6b5] rounded text-xs"
+                  className="px-2 py-1 bg-[var(--sw-input)] border border-[var(--sw-border-strong)] rounded text-xs"
                 >
                   <option value="SKIP">Skip Duplicates (Recommended)</option>
                   <option value="IMPORT_ALL">Import All Regardless</option>
@@ -383,9 +383,9 @@ INVALID_DATE,"Missing amount row",,Alice
             </div>
 
             {/* Rows Table */}
-            <div className="border border-[#e5ded0] rounded-md overflow-hidden max-h-72 overflow-y-auto">
+            <div className="border border-[var(--sw-border)] rounded-md overflow-hidden max-h-72 overflow-y-auto">
               <table className="w-full text-xs text-left">
-                <thead className="bg-[#f7f4eb] text-[#70695b] font-mono uppercase text-[10px] sticky top-0 border-b border-[#e5ded0]">
+                <thead className="bg-[var(--sw-surface-soft)] text-[var(--sw-muted)] font-mono uppercase text-[10px] sticky top-0 border-b border-[var(--sw-border)]">
                   <tr>
                     <th className="py-2 px-3">#</th>
                     <th className="py-2 px-3">Date</th>
@@ -401,18 +401,18 @@ INVALID_DATE,"Missing amount row",,Alice
                       key={r.index}
                       className={
                         r.status === 'ERROR'
-                          ? 'bg-[#fdf2ee]'
+                          ? 'bg-[var(--sw-danger-bg)]'
                           : r.status === 'DUPLICATE'
                           ? 'bg-[#faf6ee]'
-                          : 'hover:bg-[#faf7ee]'
+                          : 'hover:bg-[var(--sw-hover)]'
                       }
                     >
-                      <td className="py-2 px-3 font-mono text-[#70695b]">{r.index + 1}</td>
+                      <td className="py-2 px-3 font-mono text-[var(--sw-muted)]">{r.index + 1}</td>
                       <td className="py-2 px-3 font-mono">{r.normalizedDate || '—'}</td>
                       <td className="py-2 px-3 font-medium">
                         {r.normalizedDescription || '—'}
                         {r.errorMessage && (
-                          <div className="text-[10px] text-[#8c4b2d] font-normal">
+                          <div className="text-[10px] text-[var(--sw-rust)] font-normal">
                             {r.errorMessage}
                           </div>
                         )}
@@ -427,10 +427,10 @@ INVALID_DATE,"Missing amount row",,Alice
                         <span
                           className={`text-[9px] px-1.5 py-0.5 rounded font-mono font-bold ${
                             r.status === 'VALID'
-                              ? 'bg-[#c5d8cb] text-[#2a5c4d]'
+                              ? 'bg-[var(--sw-positive-bg)] text-[var(--sw-accent)]'
                               : r.status === 'DUPLICATE'
-                              ? 'bg-[#faebd7] text-[#8c4b2d]'
-                              : 'bg-[#f3cbbd] text-[#8c4b2d]'
+                              ? 'bg-[#faebd7] text-[var(--sw-rust)]'
+                              : 'bg-[#f3cbbd] text-[var(--sw-rust)]'
                           }`}
                         >
                           {r.status}
@@ -443,12 +443,12 @@ INVALID_DATE,"Missing amount row",,Alice
             </div>
 
             {/* Commit CTA */}
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#e2dacf]">
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[var(--sw-border-soft)]">
               <button
                 type="button"
                 disabled={committing || previewData.validRows === 0}
                 onClick={handleCommit}
-                className="px-5 py-2 bg-[#2a5c4d] hover:bg-[#20473b] text-white rounded text-xs font-semibold shadow-xs flex items-center gap-2 disabled:opacity-50"
+                className="px-5 py-2 bg-[var(--sw-accent)] hover:bg-[var(--sw-accent-strong)] text-[var(--sw-on-ink)] rounded text-xs font-semibold shadow-xs flex items-center gap-2 disabled:opacity-50"
               >
                 <span>{committing ? 'Committing...' : 'Commit Verified Records to Ledger'}</span>
                 <ArrowRight className="w-4 h-4" />
