@@ -279,7 +279,7 @@ export function SplitEditor({
 
                 {/* Right: Calculated share preview */}
                 <div className="w-24 text-right font-mono font-semibold tabular-nums text-[var(--sw-ink)]">
-                  {previewVal !== undefined ? formatMoney(previewVal, currency) : '—'}
+                  {previewVal !== undefined ? formatMoney(previewVal, currency) : '-'}
                 </div>
               </div>
             );

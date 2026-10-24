@@ -174,7 +174,7 @@ export default function GroupOverviewPage() {
                     BigInt(settlementState.plan.totalSettlementValueMinorUnits),
                     group.canonicalCurrency
                   )
-                : '—'}
+                : '-'}
             </div>
             <div className="text-[10px] text-[var(--sw-muted)]">
               {settlementState?.plan?.transfers?.length || 0} transfer(s) to balance

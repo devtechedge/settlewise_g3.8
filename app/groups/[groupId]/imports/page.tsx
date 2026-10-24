@@ -408,9 +408,9 @@ INVALID_DATE,"Missing amount row",,Alice
                       }
                     >
                       <td className="py-2 px-3 font-mono text-[var(--sw-muted)]">{r.index + 1}</td>
-                      <td className="py-2 px-3 font-mono">{r.normalizedDate || '—'}</td>
+                      <td className="py-2 px-3 font-mono">{r.normalizedDate || '-'}</td>
                       <td className="py-2 px-3 font-medium">
-                        {r.normalizedDescription || '—'}
+                        {r.normalizedDescription || '-'}
                         {r.errorMessage && (
                           <div className="text-[10px] text-[var(--sw-rust)] font-normal">
                             {r.errorMessage}
@@ -421,7 +421,7 @@ INVALID_DATE,"Missing amount row",,Alice
                       <td className="py-2 px-3 text-right font-mono font-semibold">
                         {r.normalizedAmountMinorUnits
                           ? formatMoney(BigInt(r.normalizedAmountMinorUnits), group?.canonicalCurrency)
-                          : '—'}
+                          : '-'}
                       </td>
                       <td className="py-2 px-3">
                         <span

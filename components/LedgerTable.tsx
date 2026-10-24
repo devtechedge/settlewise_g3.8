@@ -158,7 +158,7 @@ export function LedgerTable({
                       </span>
                       {exp.notes && (
                         <span className="truncate max-w-xs italic text-[var(--sw-muted)]">
-                          — {exp.notes}
+                          - {exp.notes}
                         </span>
                       )}
                     </div>

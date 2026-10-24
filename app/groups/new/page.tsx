@@ -132,7 +132,7 @@ export default function CreateGroupPage() {
               >
                 {Object.values(CURRENCY_REGISTRY).map((c) => (
                   <option key={c.code} value={c.code}>
-                    {c.code} — {c.name} ({c.symbol}, {c.decimals} decimals)
+                    {c.code} - {c.name} ({c.symbol}, {c.decimals} decimals)
                   </option>
                 ))}
               </select>

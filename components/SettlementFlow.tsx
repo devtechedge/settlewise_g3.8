@@ -161,7 +161,7 @@ export function SettlementFlow({
                     </span>
                   </div>
                   <span className="text-[11px] text-[var(--sw-muted)] hidden md:inline truncate max-w-xs">
-                    — {t.basis}
+                    - {t.basis}
                   </span>
                 </div>
 
@@ -248,7 +248,7 @@ export function SettlementFlow({
                             Reversal: {pmt.reversalReason || 'Reversed'}
                           </span>
                         ) : (
-                          pmt.notes || '—'
+                          pmt.notes || '-'
                         )}
                       </td>
                       <td className="py-2.5 px-2 text-right">
