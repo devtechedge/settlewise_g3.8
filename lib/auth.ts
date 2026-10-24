@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { db } from '@/src/db/index.ts';
+import { db, isDemoMode, awaitSeed } from '@/src/db/index.ts';
 import { users, memberships } from '@/src/db/schema.ts';
 import { eq, and } from 'drizzle-orm';
 import { AuthUser, DEMO_USERS } from './auth-types.ts';
@@ -9,9 +9,12 @@ export { DEMO_USERS };
 
 /**
  * Retrieves the currently authenticated user from request cookies.
- * Defaults to demo user 'usr_alice' if no session is set, ensuring seamless evaluator testing.
+ *
+ * Demo mode: with no session, the visitor is signed in as Alice Vance so the
+ * product is instantly explorable. Outside demo mode, an unknown or missing
+ * session returns null and callers must require authentication.
  */
-export async function getSessionUser(): Promise<AuthUser> {
+export async function getSessionUser(): Promise<AuthUser | null> {
   const cookieStore = await cookies();
   const sessionUid = cookieStore.get('settlewise_uid')?.value;
 
@@ -19,9 +22,9 @@ export async function getSessionUser(): Promise<AuthUser> {
     return DEMO_USERS[sessionUid];
   }
 
-  // Check if sessionUid exists in database
   if (sessionUid) {
     try {
+      await awaitSeed();
       const dbUser = await db.query.users.findFirst({
         where: eq(users.uid, sessionUid),
       });
@@ -33,20 +36,26 @@ export async function getSessionUser(): Promise<AuthUser> {
           photoUrl: dbUser.photoUrl,
         };
       }
-    } catch {
-      // Fallback
+    } catch (err) {
+      console.error('Session lookup failed:', err);
     }
   }
 
-  // Default to Alice Vance for instant evaluation
-  return DEMO_USERS.usr_alice;
+  if (isDemoMode()) {
+    return DEMO_USERS.usr_alice;
+  }
+  return null;
 }
 
 /**
  * Checks group membership and role for authorization.
  */
-export async function getGroupRole(groupId: string, userUid: string): Promise<'OWNER' | 'EDITOR' | 'MEMBER' | null> {
+export async function getGroupRole(
+  groupId: string,
+  userUid: string
+): Promise<'OWNER' | 'EDITOR' | 'MEMBER' | null> {
   try {
+    await awaitSeed();
     const membership = await db.query.memberships.findFirst({
       where: and(
         eq(memberships.groupId, groupId),

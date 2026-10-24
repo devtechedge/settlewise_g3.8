@@ -12,6 +12,10 @@ export async function POST(
   try {
     const { expenseId } = await params;
     const user = await getSessionUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
 
     const expense = await db.query.expenses.findFirst({
       where: eq(expenses.id, expenseId),

@@ -13,6 +13,10 @@ export async function GET(
   try {
     const { expenseId } = await params;
     const user = await getSessionUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
 
     const expense = await db.query.expenses.findFirst({
       where: eq(expenses.id, expenseId),
@@ -49,6 +53,10 @@ export async function PATCH(
   try {
     const { expenseId } = await params;
     const user = await getSessionUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
 
     const current = await db.query.expenses.findFirst({
       where: eq(expenses.id, expenseId),

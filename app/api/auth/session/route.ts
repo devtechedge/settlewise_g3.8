@@ -1,14 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSessionUser } from '@/lib/auth.ts';
 import { DEMO_USERS } from '@/lib/auth-types.ts';
-import { db } from '@/src/db/index.ts';
+import { db, isDemoMode } from '@/src/db/index.ts';
 import { users } from '@/src/db/schema.ts';
 import { eq } from 'drizzle-orm';
 
 export async function GET() {
   const user = await getSessionUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
   return NextResponse.json({
     user,
+    demoMode: isDemoMode(),
     availableDemoUsers: Object.values(DEMO_USERS),
   });
 }

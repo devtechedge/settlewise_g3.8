@@ -6,6 +6,10 @@ import { parseExactToMinorUnits } from '@/domain/money/decimal.ts';
 export async function GET() {
   try {
     const user = await getSessionUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
     const groupsList = await getUserGroups(user.uid);
     // Convert BigInt to string in response
     const sanitized = groupsList.map((g) => ({
@@ -21,6 +25,10 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const user = await getSessionUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
     const body = await req.json();
     const { name, description, canonicalCurrency, budget, budgetPeriod, initialParticipants } = body;
 

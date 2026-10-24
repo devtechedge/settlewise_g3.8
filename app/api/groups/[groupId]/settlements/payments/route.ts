@@ -13,6 +13,10 @@ export async function POST(
   try {
     const { groupId } = await params;
     const user = await getSessionUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
     const role = await getGroupRole(groupId, user.uid);
     if (!role) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
 

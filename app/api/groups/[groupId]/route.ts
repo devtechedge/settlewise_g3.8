@@ -9,6 +9,10 @@ export async function GET(
   try {
     const { groupId } = await params;
     const user = await getSessionUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
     const group = await getGroupDetails(groupId, user.uid);
 
     if (!group) {
