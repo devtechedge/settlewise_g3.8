@@ -1,14 +1,28 @@
 # SettleWise
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-2a5c4d)](https://settlewise-g3-8.vercel.app)
+[![CI](https://github.com/devtechedge/settlewise_g3.8/actions/workflows/ci.yml/badge.svg)](https://github.com/devtechedge/settlewise_g3.8/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Shared-expense reconciliation with bank-grade integer arithmetic, an immutable revision trail, and a deterministic settlement planner.
 
 SettleWise records who paid, who owes, and exactly how much, in integer minor units (cents, pence, paise, yen) so no floating-point rounding ever touches a balance. It never moves money. It is a record-keeping and settlement-planning tool, not a bank or payment processor.
 
 ## Live Demo
 
-> Demo mode runs on an in-memory PostgreSQL (PGLite) seeded with two sample ledgers on first request. The demo database resets when the server restarts or a cold start occurs, so explore freely. Data you add is not persistent.
+**Try it now: https://settlewise-g3-8.vercel.app**
+
+> Demo mode runs on an in-memory PostgreSQL (PGLite) seeded with two sample ledgers on first request. The demo database resets when a cold start occurs, so explore freely. Data you add is not persistent.
 >
 > You are signed in as Alice Vance (Owner) by default. Use the role switcher in the top-right corner to explore Bob Chen (Editor) and Charlie Miller (Member) permissions.
+
+## Screenshots
+
+| Landing | Group overview | Settlement plan |
+| --- | --- | --- |
+| ![Landing](docs/screenshots/01-landing.png) | ![Group overview](docs/screenshots/04-group-overview.png) | ![Settlement plan](docs/screenshots/06-settlements.png) |
+
+More: [Login](docs/screenshots/02-login.png), [Groups](docs/screenshots/03-groups.png), [Ledger](docs/screenshots/05-ledger.png).
 
 ## What it does
 
@@ -19,7 +33,7 @@ SettleWise records who paid, who owes, and exactly how much, in integer minor un
 - Optimistic concurrency control on ledger edits to prevent lost updates
 - Reversible offline settlement payments with idempotency keys
 - CSV import with RFC 4180 parsing, duplicate fingerprinting, and preview-before-commit
-- CS-export sanitization against spreadsheet formula injection (cells starting with `=`, `+`, `@`, tab, or CR are neutralized)
+- CSV export sanitization against spreadsheet formula injection (cells starting with `=`, `+`, `@`, tab, or CR are neutralized)
 - Immutable audit trail of every group, expense, and payment event
 - 15-table relational schema with role-based access (Owner, Editor, Member)
 
