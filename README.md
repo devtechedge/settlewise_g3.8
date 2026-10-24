@@ -74,6 +74,14 @@ To run against your own PostgreSQL database:
 bun test
 ```
 
+## Windows local builds
+
+Bun skips platform-specific optional binaries on Windows (`lightningcss`). The `postinstall` step restores the required binary automatically from the pinned `lightningcss-win32-x64-msvc` devDependency. If you ever see `Cannot find module '../lightningcss.win32-x64-msvc.node'`, run `bun install` again, or manually:
+
+```bash
+node scripts/ensure-windows-native.mjs
+```
+
 The suite covers money parsing and formatting, allocation invariants, zero-sum balances, settlement planning, reversal behavior, CSV parsing, duplicate fingerprints, and formula-injection sanitization.
 
 ## Project structure
