@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@layer base {
+  /* Subtle ledger grid and financial typography helpers */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Warm financial ledger paper styles */
+.ledger-paper {
+  background-color: #fbf9f4;
+  background-image: radial-gradient(#ebe5d8 0.75px, transparent 0.75px);
+  background-size: 16px 16px;
+}
+
+.ledger-border {
+  border-color: #e5ded0;
+}
