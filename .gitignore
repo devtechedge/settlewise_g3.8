@@ -1,7 +1,29 @@
+# Dependencies
 node_modules/
+
+# Next.js build output
 .next/
+out/
+
+# Testing
 coverage/
-.DS_Store
-*.log
+test-results/
+playwright-report/
+
+# Environment files
 .env*
 !.env.example
+
+# Vercel
+.vercel/
+
+# AI Studio artifacts (not part of the product source)
+.aistudio/
+public/assets/aistudio/
+metadata.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+*.tsbuildinfo
